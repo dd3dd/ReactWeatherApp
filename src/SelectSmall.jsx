@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-export default function Select({ data, onValueChange, onIndexChange }) {
+export default function SelectSmall({ data, onValueChange, onIndexChange }) {
 
     const handleChange = (e) => {
         onValueChange(e.target.value);
