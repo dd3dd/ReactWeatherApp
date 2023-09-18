@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import SelectSmall from './SelectSmall';
 import SelectBig from './SelectBig';
 import MyH1 from './MyH1';
-import MinTMaxT from './MinTMaxT';
+import WeatherData from './WeatherData';
+import ChangeTimeBut from './ChangeTimeBut';
 export default function MyContainer() {
     const cityCode = {
         '宜蘭縣': 'F-D0047-003', '桃園市': 'F-D0047-007', '新竹縣': 'F-D0047-011', '苗栗縣': 'F-D0047-015', '彰化縣': 'F-D0047-019',
@@ -14,15 +15,25 @@ export default function MyContainer() {
         '連江縣': 'F-D0047-083', '金門縣': 'F-D0047-087'
     }
 
-
+    const storeStartTime = [];
+    const storeEndTime = [];
+    const storePoP12 = [];
+    const storeMinT = [];
+    const storeMaxT = [];
+    const storeDes = [];
+    const display1 = [];
+    const display2 = [];
+    const display3 = [];
     const [firstData, setFirstData] = useState([])
     const [secondData, setSecondData] = useState([])
+    const [timeState, setTimeState] = useState(0);
     //const [cityData, setCityData] = useState([])
     // const [selectedValue, setSelectedValue] = useState('');
     // const [selectedIndex, setSelectedIndex] = useState(null);
 
-    const [firstselectedValue, setfirstSelectedValue] = useState({ value: '', index: null });
-    const [secondselectedValue, setsecondSelectedValue] = useState({ value: '', index: null });
+    const [firstselectedValue, setfirstSelectedValue] = useState({ value: '', index: 0 });
+    const [secondselectedValue, setsecondSelectedValue] = useState({ value: '', index: 0 });
+    const [weatherData, setWeatherData] = useState([]);
 
     const handleFirstValueChange = (valueobj) => {
         setSecondData([]);
@@ -32,6 +43,13 @@ export default function MyContainer() {
         setsecondSelectedValue(valueobj);
 
     };
+    const handleTimeButtonChange = (But) => {
+        if (But === 1)
+            setTimeState((prevState) => (prevState + 1) % 3);
+        else
+            setTimeState((prevState) => (prevState - 1 + 3) % 3);
+    }
+    // console.log(timeState);
     //  console.log(secondselectedValue)
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     useEffect(() => {
@@ -58,14 +76,72 @@ export default function MyContainer() {
         console.log(currentCityCode);
 
     }, [firstselectedValue]);
-    // console.log(data);
+
+    useEffect(() => {
+        if (secondselectedValue.index !== 0) {
+            //  setTimeState(display1);
+            //console.log(secondselectedValue)
+            for (let i = 0; i < 3; i++) {
+                storeStartTime.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].startTime);
+                storeEndTime.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].endTime);
+                storePoP12.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].elementValue[0].value);
+                storeMinT.push(secondData[secondselectedValue.index - 1].weatherElement[1].time[i].elementValue[0].value);
+                storeMaxT.push(secondData[secondselectedValue.index - 1].weatherElement[3].time[i].elementValue[0].value);
+                storeDes.push(secondData[secondselectedValue.index - 1].weatherElement[2].time[i].elementValue[0].value);
+            }
+            for (let i = 0; i < 3; i++) {
+                storeStartTime[i] = storeStartTime[i].slice(11, 16);
+                storeEndTime[i] = storeEndTime[i].slice(11, 16);
+            }
+
+            if (timeState === 0) {
+                display1.push(storeStartTime[0]);
+                display1.push(storeEndTime[0]);
+                display1.push(storePoP12[0]);
+                display1.push(storeMinT[0]);
+                display1.push(storeMaxT[0]);
+                setWeatherData(display1);
+            }
+            else if (timeState === 1) {
+                display2.push(storeStartTime[1]);
+                display2.push(storeEndTime[1]);
+                display2.push(storePoP12[1]);
+                display2.push(storeMinT[1]);
+                display2.push(storeMaxT[1]);
+                setWeatherData(display2);
+            }
+            else {
+                display3.push(storeStartTime[2]);
+                display3.push(storeEndTime[2]);
+                display3.push(storePoP12[2]);
+                display3.push(storeMinT[2]);
+                display3.push(storeMaxT[2]);
+                setWeatherData(display3);
+            }
+            console.log(timeState);
+            //   console.log(display1);
+
+        }
+        else {
+            setWeatherData([]);
+        }
+        //  console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
+    }, [secondselectedValue, timeState]);
+
+    //console.log(storeMinT[0]);
+    //console.log(secondData[secondselectedValue.index - 1]);
+
+
+
+    //console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
 
     return (
         <div className='MyContainer'>
             <MyH1 selectedValue={secondselectedValue.value} />
             <SelectBig firstData={firstData} secondData={secondData} firstValueChange={handleFirstValueChange}
                 secondValueChange={handleSecondValueChange} />
-            <MinTMaxT />
+            <WeatherData weatherData={weatherData} />
+            <ChangeTimeBut butTimeState={handleTimeButtonChange} />
 
         </div>
     )
