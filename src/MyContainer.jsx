@@ -31,21 +31,21 @@ export default function MyContainer() {
     // const [selectedValue, setSelectedValue] = useState('');
     // const [selectedIndex, setSelectedIndex] = useState(null);
 
-    const [firstselectedValue, setfirstSelectedValue] = useState({ value: '', index: 0 });
-    const [secondselectedValue, setsecondSelectedValue] = useState({ value: '', index: 0 });
+    const [firstselectedValue, setfirstSelectedValue] = useState('');
+    const [secondselectedValue, setsecondSelectedValue] = useState('');
     const [weatherData, setWeatherData] = useState([]);
     const [firstDecision, setfirstDecision] = useState([false, false]);
 
-    const handleFirstValueChange = (valueobj) => {
-        setfirstDecision([true, false]);
+    const handleFirstValueChange = (value) => {
+        setfirstDecision([true, true]);
         setSecondData([]);
-        setfirstSelectedValue(valueobj);
-        setsecondSelectedValue({ value: '', index: 0 });
+        setfirstSelectedValue(value);
+        setsecondSelectedValue('');
         setTimeState(0);
     };
-    const handleSecondValueChange = (valueobj) => {
-        setfirstDecision([true, true]);
-        setsecondSelectedValue(valueobj);
+    const handleSecondValueChange = (value) => {
+        // setfirstDecision([true, true]);
+        setsecondSelectedValue(value);
         setTimeState(0);
 
     };
@@ -70,9 +70,9 @@ export default function MyContainer() {
 
     }, []);
     useEffect(() => {
-
+        // console.log(firstselectedValue)
         let currentCityCode = '';
-        currentCityCode = cityCode[firstselectedValue.value];
+        currentCityCode = cityCode[firstselectedValue];
 
         axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}&elementName=MinT,MaxT,PoP12h,WeatherDescription`)
             .then((response) => {
@@ -81,22 +81,32 @@ export default function MyContainer() {
             .catch((error) => {
                 console.error('API 請求失敗', error);
             });
-        console.log(currentCityCode);
+        //    console.log(currentCityCode);
 
     }, [firstselectedValue]);
 
     useEffect(() => {
-        if (secondselectedValue.index !== 0 || firstDecision[1] === true) {
+        console.log(firstselectedValue)
+        if (secondselectedValue !== '' && firstDecision[1] === true) {
             //  setTimeState(display1);
-            console.log(secondselectedValue.index);
+            //  console.log(secondselectedValue.index);
             //console.log(secondselectedValue)
+            //    console.log(firstselectedValue, secondselectedValue);
+            const selectedTown = secondselectedValue;
+            //  console.log(secondData)
+            const selectedTownIdx = secondData.indexOf(secondData.find(element => {
+                return element.locationName === selectedTown;
+            }))
+
+            //    console.log(selectedTownIdx);
+
             for (let i = 0; i < 3; i++) {
-                storeStartTime.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].startTime);
-                storeEndTime.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].endTime);
-                storePoP12.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].elementValue[0].value);
-                storeMinT.push(secondData[secondselectedValue.index - 1].weatherElement[1].time[i].elementValue[0].value);
-                storeMaxT.push(secondData[secondselectedValue.index - 1].weatherElement[3].time[i].elementValue[0].value);
-                storeDes.push(secondData[secondselectedValue.index - 1].weatherElement[2].time[i].elementValue[0].value);
+                storeStartTime.push(secondData[selectedTownIdx].weatherElement[0].time[i].startTime);
+                storeEndTime.push(secondData[selectedTownIdx].weatherElement[0].time[i].endTime);
+                storePoP12.push(secondData[selectedTownIdx].weatherElement[0].time[i].elementValue[0].value);
+                storeMinT.push(secondData[selectedTownIdx].weatherElement[1].time[i].elementValue[0].value);
+                storeMaxT.push(secondData[selectedTownIdx].weatherElement[3].time[i].elementValue[0].value);
+                storeDes.push(secondData[selectedTownIdx].weatherElement[2].time[i].elementValue[0].value);
             }
             for (let i = 0; i < 3; i++) {
                 storeStartTime[i] = storeStartTime[i].slice(11, 16);
@@ -173,7 +183,7 @@ export default function MyContainer() {
 
     return (
         <div className='MyContainer'>
-            <MyH1 selectedValue={secondselectedValue.value} />
+            <MyH1 selectedValue={secondselectedValue} />
             <SelectBig firstData={firstData} secondData={secondData} firstValueChange={handleFirstValueChange}
                 secondValueChange={handleSecondValueChange} firstDecision={firstDecision} />
             <WeatherData weatherData={weatherData} />
