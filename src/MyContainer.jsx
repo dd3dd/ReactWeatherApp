@@ -34,13 +34,19 @@ export default function MyContainer() {
     const [firstselectedValue, setfirstSelectedValue] = useState({ value: '', index: 0 });
     const [secondselectedValue, setsecondSelectedValue] = useState({ value: '', index: 0 });
     const [weatherData, setWeatherData] = useState([]);
+    const [firstDecision, setfirstDecision] = useState([false, false]);
 
     const handleFirstValueChange = (valueobj) => {
+        setfirstDecision([true, false]);
         setSecondData([]);
         setfirstSelectedValue(valueobj);
+        setsecondSelectedValue({ value: '', index: 0 });
+        setTimeState(0);
     };
     const handleSecondValueChange = (valueobj) => {
+        setfirstDecision([true, true]);
         setsecondSelectedValue(valueobj);
+        setTimeState(0);
 
     };
     const handleTimeButtonChange = (But) => {
@@ -49,6 +55,7 @@ export default function MyContainer() {
         else
             setTimeState((prevState) => (prevState - 1 + 3) % 3);
     }
+
     // console.log(timeState);
     //  console.log(secondselectedValue)
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
@@ -63,6 +70,7 @@ export default function MyContainer() {
 
     }, []);
     useEffect(() => {
+
         let currentCityCode = '';
         currentCityCode = cityCode[firstselectedValue.value];
 
@@ -78,8 +86,9 @@ export default function MyContainer() {
     }, [firstselectedValue]);
 
     useEffect(() => {
-        if (secondselectedValue.index !== 0) {
+        if (secondselectedValue.index !== 0 || firstDecision[1] === true) {
             //  setTimeState(display1);
+            console.log(secondselectedValue.index);
             //console.log(secondselectedValue)
             for (let i = 0; i < 3; i++) {
                 storeStartTime.push(secondData[secondselectedValue.index - 1].weatherElement[0].time[i].startTime);
@@ -93,6 +102,27 @@ export default function MyContainer() {
                 storeStartTime[i] = storeStartTime[i].slice(11, 16);
                 storeEndTime[i] = storeEndTime[i].slice(11, 16);
             }
+            let hourMsg1, hourMsg2, hourMsg3 = '';
+            if (storeStartTime[0].slice(0, 2) === '0') {
+                hourMsg1 = '今日凌晨';
+                hourMsg2 = '今日白天';
+                hourMsg3 = '今日晚上';
+            }
+            else if (storeStartTime[0].slice(0, 2) === '6') {
+                hourMsg1 = '今日白天';
+                hourMsg2 = '今晚明晨';
+                hourMsg3 = '明日白天';
+            }
+            else if (storeStartTime[0].slice(0, 2) === '12') {
+                hourMsg1 = '今日白天';
+                hourMsg2 = '今晚明晨';
+                hourMsg3 = '明日白天';
+            }
+            else if (storeStartTime[0].slice(0, 2) === '18') {
+                hourMsg1 = '今晚明晨';
+                hourMsg2 = '明日白天';
+                hourMsg3 = '明日晚上';
+            }
 
             if (timeState === 0) {
                 display1.push(storeStartTime[0]);
@@ -100,7 +130,10 @@ export default function MyContainer() {
                 display1.push(storePoP12[0]);
                 display1.push(storeMinT[0]);
                 display1.push(storeMaxT[0]);
+                display1.push(hourMsg1);
                 setWeatherData(display1);
+
+
             }
             else if (timeState === 1) {
                 display2.push(storeStartTime[1]);
@@ -108,6 +141,7 @@ export default function MyContainer() {
                 display2.push(storePoP12[1]);
                 display2.push(storeMinT[1]);
                 display2.push(storeMaxT[1]);
+                display2.push(hourMsg2);
                 setWeatherData(display2);
             }
             else {
@@ -116,18 +150,20 @@ export default function MyContainer() {
                 display3.push(storePoP12[2]);
                 display3.push(storeMinT[2]);
                 display3.push(storeMaxT[2]);
+                display3.push(hourMsg3);
                 setWeatherData(display3);
             }
-            console.log(timeState);
+            //  console.log(timeState);
             //   console.log(display1);
-
+            //  console.log('aa');
         }
         else {
-            setWeatherData([]);
+            //setWeatherData([]);
         }
-        //  console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
-    }, [secondselectedValue, timeState]);
 
+        // console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
+    }, [secondselectedValue, timeState]);
+    // console.log(secondselectedValue);
     //console.log(storeMinT[0]);
     //console.log(secondData[secondselectedValue.index - 1]);
 
@@ -139,7 +175,7 @@ export default function MyContainer() {
         <div className='MyContainer'>
             <MyH1 selectedValue={secondselectedValue.value} />
             <SelectBig firstData={firstData} secondData={secondData} firstValueChange={handleFirstValueChange}
-                secondValueChange={handleSecondValueChange} />
+                secondValueChange={handleSecondValueChange} firstDecision={firstDecision} />
             <WeatherData weatherData={weatherData} />
             <ChangeTimeBut butTimeState={handleTimeButtonChange} />
 

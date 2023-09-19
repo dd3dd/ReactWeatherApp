@@ -1,4 +1,4 @@
-export default function SelectBig({ firstData, secondData, firstValueChange, secondValueChange }) {
+export default function SelectBig({ firstData, secondData, firstValueChange, secondValueChange, firstDecision }) {
     const firstHandleChange = (e) => {
         const eventObj = { value: e.target.value, index: e.target.selectedIndex }
         firstValueChange(eventObj);
@@ -10,7 +10,7 @@ export default function SelectBig({ firstData, secondData, firstValueChange, sec
     return (
         <div>
             <select onChange={firstHandleChange}>
-                <option >選擇縣市</option>
+                <option disabled={firstDecision[0]}>選擇縣市</option>
                 {firstData.map((item) => (
                     <option value={item.locationName}>
                         {item.locationName}
@@ -18,7 +18,7 @@ export default function SelectBig({ firstData, secondData, firstValueChange, sec
                 ))}
             </select>
             <select onChange={secondHandleChange}>
-                <option >選擇鄉鎮</option>
+                <option disabled={firstDecision[1]}>選擇鄉鎮</option>
                 {secondData.map((item) => (
                     <option value={item.locationName}>
                         {item.locationName}
