@@ -1,1 +1,6 @@
-.Hours {}
+.Hours {
+    position: relative;
+    top: -100px;
+    font-size: 1.2em;
+
+}

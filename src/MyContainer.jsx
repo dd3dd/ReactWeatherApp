@@ -6,6 +6,7 @@ import SelectBig from './SelectBig';
 import MyH1 from './MyH1';
 import WeatherData from './WeatherData';
 import ChangeTimeBut from './ChangeTimeBut';
+import './Hours.css'
 export default function MyContainer() {
     const cityCode = {
         '宜蘭縣': 'F-D0047-003', '桃園市': 'F-D0047-007', '新竹縣': 'F-D0047-011', '苗栗縣': 'F-D0047-015', '彰化縣': 'F-D0047-019',
@@ -34,20 +35,27 @@ export default function MyContainer() {
     const [weatherData, setWeatherData] = useState([]);
     const [firstDecision, setfirstDecision] = useState([false, false]);
 
+
     const handleFirstValueChange = (value) => {
         setsecondSelectedValue('');
         setfirstDecision([true, false]);
         setSecondData([]);
         setWeatherData([]);
         setfirstSelectedValue(value);
+
         setTimeState(0);
+
     };
     const handleSecondValueChange = (value) => {
         setfirstDecision([true, true]);
         setsecondSelectedValue(value);
         setTimeState(0);
 
+
+
+
     };
+
     const handleTimeButtonChange = (But) => {
         if (But === 1)
             setTimeState((prevState) => (prevState + 1) % 3);
@@ -84,7 +92,7 @@ export default function MyContainer() {
     }, [firstselectedValue]);
 
     useEffect(() => {
-        //  console.log(firstselectedValue)
+
         if (secondselectedValue !== '' && firstDecision[1] === true) {
             //  setTimeState(display1);
             //  console.log(secondselectedValue.index);
@@ -105,11 +113,16 @@ export default function MyContainer() {
                 storeMaxT.push(secondData[selectedTownIdx].weatherElement[3].time[i].elementValue[0].value);
                 storeDes.push(secondData[selectedTownIdx].weatherElement[2].time[i].elementValue[0].value);
             }
+            //console.log(storeDes);
             for (let i = 0; i < 3; i++) {
                 storeStartTime[i] = storeStartTime[i].slice(11, 16);
                 storeEndTime[i] = storeEndTime[i].slice(11, 16);
+                storeDes[i] = storeDes[i].slice(0, storeDes[i].indexOf('。'))
             }
 
+
+
+            //  console.log(storeDes);
             const currentDate = new Date();
             const hours = currentDate.getHours();
 
@@ -156,6 +169,7 @@ export default function MyContainer() {
                 display1.push(storeMinT[0]);
                 display1.push(storeMaxT[0]);
                 display1.push(hourMsg1);
+                display1.push(storeDes[0]);
                 setWeatherData(display1);
 
 
@@ -167,6 +181,7 @@ export default function MyContainer() {
                 display2.push(storeMinT[1]);
                 display2.push(storeMaxT[1]);
                 display2.push(hourMsg2);
+                display2.push(storeDes[1]);
                 setWeatherData(display2);
             }
             else {
@@ -176,6 +191,7 @@ export default function MyContainer() {
                 display3.push(storeMinT[2]);
                 display3.push(storeMaxT[2]);
                 display3.push(hourMsg3);
+                display3.push(storeDes[2]);
                 setWeatherData(display3);
             }
 

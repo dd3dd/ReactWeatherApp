@@ -5,10 +5,11 @@ import './StartEndTime.css'
 import './Hours.css'
 import './WeatherData.css'
 import './RainIcon.css'
+
+
+
 export default function WeatherData({ weatherData }) {
-
-
-    // console.log(HoursStatement)
+    console.log(weatherData)
     return (
         <div className='WeatherData'>
             <p className="Hours">
@@ -16,6 +17,9 @@ export default function WeatherData({ weatherData }) {
             </p>
             <p className="StartEndTime">
                 {weatherData.length !== 0 && `${weatherData[0]}~${weatherData[1]}`}
+            </p>
+            <p className="MinTMaxT">
+                {weatherData.length !== 0 && `${weatherData[6]}`}
             </p>
             <p className="MinTMaxT">
                 {weatherData.length !== 0 && `${weatherData[3]}°C~${weatherData[4]}°C`}
