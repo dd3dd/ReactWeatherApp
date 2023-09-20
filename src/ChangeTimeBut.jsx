@@ -1,9 +1,10 @@
-
-export default function ChangeTimeBut({ butTimeState }) {
+import './ChangeTimeBut.css'
+import Button from 'react-bootstrap/Button';
+export default function ChangeTimeBut({ butTimeState, weatherData }) {
     return (
-        <div>
-            <button onClick={() => { butTimeState(-1) }}>{'<'}</button>
-            <button onClick={() => { butTimeState(1) }}>{'>'}</button>
+        <div className="ChangeTimeBut">
+            {weatherData.length !== 0 && <Button variant="light" onClick={() => { butTimeState(-1) }}>{'<'}</Button>}
+            {weatherData.length !== 0 && <Button variant="light" onClick={() => { butTimeState(1) }}>{'>'}</Button>}
         </div>
     )
 }

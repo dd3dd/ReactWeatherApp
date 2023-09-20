@@ -27,9 +27,7 @@ export default function MyContainer() {
     const [firstData, setFirstData] = useState([])
     const [secondData, setSecondData] = useState([])
     const [timeState, setTimeState] = useState(0);
-    //const [cityData, setCityData] = useState([])
-    // const [selectedValue, setSelectedValue] = useState('');
-    // const [selectedIndex, setSelectedIndex] = useState(null);
+
 
     const [firstselectedValue, setfirstSelectedValue] = useState('');
     const [secondselectedValue, setsecondSelectedValue] = useState('');
@@ -37,14 +35,15 @@ export default function MyContainer() {
     const [firstDecision, setfirstDecision] = useState([false, false]);
 
     const handleFirstValueChange = (value) => {
-        setfirstDecision([true, true]);
-        setSecondData([]);
-        setfirstSelectedValue(value);
         setsecondSelectedValue('');
+        setfirstDecision([true, false]);
+        setSecondData([]);
+        setWeatherData([]);
+        setfirstSelectedValue(value);
         setTimeState(0);
     };
     const handleSecondValueChange = (value) => {
-        // setfirstDecision([true, true]);
+        setfirstDecision([true, true]);
         setsecondSelectedValue(value);
         setTimeState(0);
 
@@ -56,8 +55,7 @@ export default function MyContainer() {
             setTimeState((prevState) => (prevState - 1 + 3) % 3);
     }
 
-    // console.log(timeState);
-    //  console.log(secondselectedValue)
+
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     useEffect(() => {
         axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${myAuthorization}&elementName=T`)
@@ -70,7 +68,7 @@ export default function MyContainer() {
 
     }, []);
     useEffect(() => {
-        // console.log(firstselectedValue)
+
         let currentCityCode = '';
         currentCityCode = cityCode[firstselectedValue];
 
@@ -81,12 +79,12 @@ export default function MyContainer() {
             .catch((error) => {
                 console.error('API 請求失敗', error);
             });
-        //    console.log(currentCityCode);
+
 
     }, [firstselectedValue]);
 
     useEffect(() => {
-        console.log(firstselectedValue)
+        //  console.log(firstselectedValue)
         if (secondselectedValue !== '' && firstDecision[1] === true) {
             //  setTimeState(display1);
             //  console.log(secondselectedValue.index);
@@ -98,7 +96,6 @@ export default function MyContainer() {
                 return element.locationName === selectedTown;
             }))
 
-            //    console.log(selectedTownIdx);
 
             for (let i = 0; i < 3; i++) {
                 storeStartTime.push(secondData[selectedTownIdx].weatherElement[0].time[i].startTime);
@@ -112,27 +109,45 @@ export default function MyContainer() {
                 storeStartTime[i] = storeStartTime[i].slice(11, 16);
                 storeEndTime[i] = storeEndTime[i].slice(11, 16);
             }
+
+            const currentDate = new Date();
+            const hours = currentDate.getHours();
+
             let hourMsg1, hourMsg2, hourMsg3 = '';
-            if (storeStartTime[0].slice(0, 2) === '0') {
-                hourMsg1 = '今日凌晨';
+            if (hours >= 0 && hours < 6) {
+                hourMsg1 = '今晚明晨';
                 hourMsg2 = '今日白天';
                 hourMsg3 = '今日晚上';
             }
-            else if (storeStartTime[0].slice(0, 2) === '6') {
+            else if (hours >= 6 && hours < 12) {
                 hourMsg1 = '今日白天';
                 hourMsg2 = '今晚明晨';
                 hourMsg3 = '明日白天';
             }
-            else if (storeStartTime[0].slice(0, 2) === '12') {
+            else if (hours >= 12 && hours < 18) {
                 hourMsg1 = '今日白天';
                 hourMsg2 = '今晚明晨';
                 hourMsg3 = '明日白天';
             }
-            else if (storeStartTime[0].slice(0, 2) === '18') {
+            else if (hours >= 18 && hours < 24) {
                 hourMsg1 = '今晚明晨';
                 hourMsg2 = '明日白天';
                 hourMsg3 = '明日晚上';
             }
+            // if (storeStartTime[0].slice(0, 2) === '00') {
+
+            // }
+            // else if (storeStartTime[0].slice(0, 2) === '06') {
+
+            // }
+            // else if (storeStartTime[0].slice(0, 2) === '12') {
+
+            // }
+            // else if (storeStartTime[0].slice(0, 2) === '18') {
+
+            // }
+
+            //console.log(hourMsg1, hourMsg2, hourMsg3)
 
             if (timeState === 0) {
                 display1.push(storeStartTime[0]);
@@ -163,22 +178,14 @@ export default function MyContainer() {
                 display3.push(hourMsg3);
                 setWeatherData(display3);
             }
-            //  console.log(timeState);
-            //   console.log(display1);
-            //  console.log('aa');
+
         }
         else {
-            //setWeatherData([]);
+
         }
 
         // console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
     }, [secondselectedValue, timeState]);
-    // console.log(secondselectedValue);
-    //console.log(storeMinT[0]);
-    //console.log(secondData[secondselectedValue.index - 1]);
-
-
-
     //console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
 
     return (
@@ -187,7 +194,7 @@ export default function MyContainer() {
             <SelectBig firstData={firstData} secondData={secondData} firstValueChange={handleFirstValueChange}
                 secondValueChange={handleSecondValueChange} firstDecision={firstDecision} />
             <WeatherData weatherData={weatherData} />
-            <ChangeTimeBut butTimeState={handleTimeButtonChange} />
+            <ChangeTimeBut butTimeState={handleTimeButtonChange} weatherData={weatherData} />
 
         </div>
     )
