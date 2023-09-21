@@ -1,7 +1,6 @@
 import './MyContainer.css'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import SelectSmall from './SelectSmall';
 import SelectBig from './SelectBig';
 import MyH1 from './MyH1';
 import WeatherData from './WeatherData';
@@ -25,7 +24,10 @@ export default function MyContainer() {
     const display1 = [];
     const display2 = [];
     const display3 = [];
-    const [firstData, setFirstData] = useState([])
+    //const [firstData,setFirstData]=useState([]);
+    const [firstData, setFirstData] = useState(['新竹縣', '金門縣', '苗栗縣', '新北市', '宜蘭縣', '雲林縣',
+        '臺南市', '高雄市', '彰化縣', '臺北市', '南投縣', '澎湖縣', '基隆市',
+        '桃園市', '花蓮縣', '連江縣', '臺東縣', '嘉義市', '嘉義縣', '屏東縣', '臺中市', '新竹市'])
     const [secondData, setSecondData] = useState([])
     const [timeState, setTimeState] = useState(0);
 
@@ -34,7 +36,7 @@ export default function MyContainer() {
     const [secondselectedValue, setsecondSelectedValue] = useState('');
     const [weatherData, setWeatherData] = useState([]);
     const [firstDecision, setfirstDecision] = useState([false, false]);
-
+    const [showText, setShowText] = useState(false);
 
     const handleFirstValueChange = (value) => {
         setsecondSelectedValue('');
@@ -47,16 +49,35 @@ export default function MyContainer() {
 
     };
     const handleSecondValueChange = (value) => {
+        if (showText) {
+            // 如果当前文本正在显示，则设置showText为false以触发消失动画
+            setShowText(false);
+            // 使用setTimeout在动画完成后将新文本设置为选中的选项，并再次显示
+            setTimeout(() => {
+
+                setShowText(true);
+            }, 200); // 这里的500表示渐变效果的持续时间
+        } else {
+            setShowText(true);
+        }
         setfirstDecision([true, true]);
         setsecondSelectedValue(value);
         setTimeState(0);
 
-
-
-
     };
 
     const handleTimeButtonChange = (But) => {
+        if (showText) {
+            // 如果当前文本正在显示，则设置showText为false以触发消失动画
+            setShowText(false);
+            // 使用setTimeout在动画完成后将新文本设置为选中的选项，并再次显示
+            setTimeout(() => {
+
+                setShowText(true);
+            }, 200); // 这里的500表示渐变效果的持续时间
+        } else {
+            setShowText(true);
+        }
         if (But === 1)
             setTimeState((prevState) => (prevState + 1) % 3);
         else
@@ -65,16 +86,17 @@ export default function MyContainer() {
 
 
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
-    useEffect(() => {
-        axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${myAuthorization}&elementName=T`)
-            .then((response) => {
-                setFirstData(response.data.records.locations[0].location);
-            })
-            .catch((error) => {
-                console.error('API 請求失敗', error);
-            });
+    // useEffect(() => {
+    //     axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=${myAuthorization}&elementName=T`)
+    //         .then((response) => {
+    //             setFirstData(response.data.records.locations[0].location);
+    //         })
+    //         .catch((error) => {
+    //             console.error('API 請求失敗', error);
+    //         });
 
-    }, []);
+    // }, []);
+    //console.log(firstData)
     useEffect(() => {
 
         let currentCityCode = '';
@@ -94,12 +116,7 @@ export default function MyContainer() {
     useEffect(() => {
 
         if (secondselectedValue !== '' && firstDecision[1] === true) {
-            //  setTimeState(display1);
-            //  console.log(secondselectedValue.index);
-            //console.log(secondselectedValue)
-            //    console.log(firstselectedValue, secondselectedValue);
             const selectedTown = secondselectedValue;
-            //  console.log(secondData)
             const selectedTownIdx = secondData.indexOf(secondData.find(element => {
                 return element.locationName === selectedTown;
             }))
@@ -113,16 +130,13 @@ export default function MyContainer() {
                 storeMaxT.push(secondData[selectedTownIdx].weatherElement[3].time[i].elementValue[0].value);
                 storeDes.push(secondData[selectedTownIdx].weatherElement[2].time[i].elementValue[0].value);
             }
-            //console.log(storeDes);
+
             for (let i = 0; i < 3; i++) {
                 storeStartTime[i] = storeStartTime[i].slice(11, 16);
                 storeEndTime[i] = storeEndTime[i].slice(11, 16);
                 storeDes[i] = storeDes[i].slice(0, storeDes[i].indexOf('。'))
             }
 
-
-
-            //  console.log(storeDes);
             const currentDate = new Date();
             const hours = currentDate.getHours();
 
@@ -147,20 +161,6 @@ export default function MyContainer() {
                 hourMsg2 = '明日白天';
                 hourMsg3 = '明日晚上';
             }
-            // if (storeStartTime[0].slice(0, 2) === '00') {
-
-            // }
-            // else if (storeStartTime[0].slice(0, 2) === '06') {
-
-            // }
-            // else if (storeStartTime[0].slice(0, 2) === '12') {
-
-            // }
-            // else if (storeStartTime[0].slice(0, 2) === '18') {
-
-            // }
-
-            //console.log(hourMsg1, hourMsg2, hourMsg3)
 
             if (timeState === 0) {
                 display1.push(storeStartTime[0]);
@@ -202,14 +202,13 @@ export default function MyContainer() {
 
         // console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
     }, [secondselectedValue, timeState]);
-    //console.log(storeStartTime, storeEndTime, storePoP12, storeMinT, storeMaxT, storeDes);
 
     return (
         <div className='MyContainer'>
             <MyH1 selectedValue={secondselectedValue} />
             <SelectBig firstData={firstData} secondData={secondData} firstValueChange={handleFirstValueChange}
                 secondValueChange={handleSecondValueChange} firstDecision={firstDecision} />
-            <WeatherData weatherData={weatherData} />
+            <WeatherData weatherData={weatherData} showText={showText} />
             <ChangeTimeBut butTimeState={handleTimeButtonChange} weatherData={weatherData} />
 
         </div>

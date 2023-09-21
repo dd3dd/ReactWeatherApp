@@ -5,3 +5,13 @@
     align-items: center;
     margin-top: 20px;
 }
+
+.fade-effect {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+
+}
+
+.fade-effect.show {
+    opacity: 1;
+}
