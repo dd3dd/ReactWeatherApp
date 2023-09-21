@@ -3,10 +3,10 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 90vw;
+    width: 370px;
     height: 550px;
     border-radius: 10px;
     background-image: url('../background.avif');
-    box-shadow: 5px 5px 10px 10px rgba(22, 112, 208, 0.5);
+    border: 1px solid black;
 
 }

@@ -8,7 +8,7 @@
 
 .fade-effect {
     opacity: 0;
-    transition: opacity 0.1s ease-out;
+    transition: opacity 0.3s ease-out;
 
 }
 
