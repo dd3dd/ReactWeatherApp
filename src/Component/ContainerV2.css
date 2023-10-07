@@ -1,0 +1,10 @@
+.ContainerV2 {
+    width: 370px;
+    height: 550px;
+    background-color: #8ecae6;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

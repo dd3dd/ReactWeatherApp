@@ -1,0 +1,34 @@
+.Row24Hr {
+    width: 90%;
+    background-color: #59a5d8;
+    height: 150px;
+    border-radius: 10px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.Item1Hr {
+    display: flex;
+    flex-direction: column;
+    min-width: 25%;
+    height: 100%;
+    align-items: center;
+}
+
+.Time {
+    font-size: 0.9em;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.Pop {
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.Img {
+    width: 40px;
+    text-align: center;
+    position: relative;
+    margin-top: -5px;
+}

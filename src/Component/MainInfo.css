@@ -1,0 +1,36 @@
+.MainInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40%;
+    position: relative;
+    justify-content: center;
+}
+
+.UserPos {
+    position: absolute;
+    font-size: 2em;
+    top: 30px;
+}
+
+.Temp {
+    position: absolute;
+    font-size: 5.5em;
+    left: 15px;
+    top: 40px;
+}
+
+.Weather {
+    position: relative;
+    font-size: 1.2em;
+    top: 85px;
+
+}
+
+.MinMaxT {
+    position: relative;
+    font-size: 1.2em;
+    top: 65px;
+    left: 5px;
+
+}
