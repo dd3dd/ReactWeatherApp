@@ -1,3 +1,17 @@
+::-webkit-scrollbar {
+    width: 6px;
+    /* 卷軸的寬度 */
+    height: 6px;
+    /* 卷軸的高度 */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e5e5e5;
+    /* 卷軸滑塊的背景色 */
+    border-radius: 3px;
+    /* 圓角 */
+}
+
 .Row24Hr {
     width: 90%;
     background-color: #59a5d8;
@@ -5,6 +19,9 @@
     border-radius: 10px;
     display: flex;
     overflow-x: auto;
+    margin-top: -10px;
+    position: absolute;
+    top: 230px;
 }
 
 .Item1Hr {
@@ -22,8 +39,10 @@
 }
 
 .Pop {
-    font-size: 0.9em;
+    font-size: 0.5em;
     text-align: center;
+    color: #48cae4;
+
 }
 
 .Img {
@@ -31,4 +50,10 @@
     text-align: center;
     position: relative;
     margin-top: -5px;
+}
+
+.TempHr {
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: -12px;
 }

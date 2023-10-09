@@ -9,7 +9,7 @@ export default function Row24Hr({ data1Hr }) {
         <div className="Row24Hr">
 
             {data1Hr.map(obj => {
-                return <Item1Hr time={obj.time} pop={obj.pop} image={obj.image} />
+                return <Item1Hr time={obj.time} pop={obj.pop} image={obj.image} temp={obj.temp} />
             })}
         </div>
     )

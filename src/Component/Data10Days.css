@@ -1,0 +1,89 @@
+.Data10Days {
+    width: 90%;
+    height: 550px;
+    background-color: #59a5d8;
+
+    border-radius: 10px;
+    position: absolute;
+    top: 380px;
+}
+
+.SubTitle {
+    position: relative;
+    width: 90%;
+    height: 30px;
+    margin: 0 auto;
+
+}
+
+.SubTitleText {
+    font-size: 1px;
+    color: #ced4da;
+    position: absolute;
+    top: 10px;
+
+}
+
+.myhr {
+    position: absolute;
+    top: 20px;
+    border: 1px solid rgba(206, 212, 218, 0.7);
+    width: 100%;
+}
+
+.Data10DaysItem {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    font-size: 8px;
+    justify-content: space-around;
+}
+
+.Day {
+    position: relative;
+    top: 15px;
+    left: 5px;
+}
+
+.Img10Days {
+    position: relative;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.minT10Days {
+    position: relative;
+    top: 15px;
+    left: 30px;
+}
+
+.maxT10Days {
+    position: relative;
+    top: 15px;
+    left: 0px;
+}
+
+.Wave {
+    position: relative;
+    top: 15px;
+    left: 15px;
+}
+
+.pop10Days {
+    position: relative;
+    top: 2px;
+    font-size: 1px;
+    color: #48cae4;
+
+}
+
+.IconAndPop {
+    left: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

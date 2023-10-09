@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import './ContainerV2.css'
 import MainInfo from "./MainInfo";
 import Row24Hr from "./Row24Hr";
+import Data10Days from "./Data10Days";
 export default function ContainerV2() {
+    const getDay = { 0: '週日', 1: '週一', 2: '週二', 3: '週三', 4: '週四', 5: '週五', 6: '週六' }
     const cityCode = {
         '宜蘭縣': 'F-D0047-003', '桃園市': 'F-D0047-007', '新竹縣': 'F-D0047-011', '苗栗縣': 'F-D0047-015', '彰化縣': 'F-D0047-019',
         '南投縣': 'F-D0047-023', '雲林縣': 'F-D0047-027', '嘉義縣': 'F-D0047-031', '屏東縣': 'F-D0047-035', '臺東縣': 'F-D0047-039',
@@ -13,9 +15,12 @@ export default function ContainerV2() {
     }
     //  const [userPos, setUserPos] = useState(null);
     const currentTime = new Date();
+    const days = currentTime.getDay();
+
     const hours = currentTime.getHours();
     const [weatherData, setWeatherData] = useState({});
     const [data1Hr, setData1Hr] = useState();
+    const [data10Days, setdata10Days] = useState();
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     const weatherapieKey = '9c46040661fe4027a7835737230710'
     useEffect(() => {
@@ -47,6 +52,7 @@ export default function ContainerV2() {
                         const weekData = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}
 &elementName=MinT,MaxT,PoP12h,WeatherDescription`)
                         const data1Hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&key=${weatherapieKey}`)
+                        const data10Days = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=10&hour=9&lang=zh_tw&key=${weatherapieKey}`)
                         //const future24hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=
                         // zh_tw&key=${weatherapieKey}`)
                         //console.log(dataA00001.data, dataA00003.data)
@@ -102,7 +108,8 @@ export default function ContainerV2() {
                             perfectData = [...perfectData, {
                                 time: timeMsg,
                                 pop: select1[i].chance_of_rain,
-                                image: select1[i].condition.icon
+                                image: select1[i].condition.icon,
+                                temp: select1[i].temp_c
                             }]
                         }
                         for (let i = 0; i < hours; i++) {
@@ -116,11 +123,27 @@ export default function ContainerV2() {
                             perfectData = [...perfectData, {
                                 time: timeMsg,
                                 pop: select2[i].chance_of_rain,
-                                image: select2[i].condition.icon
+                                image: select2[i].condition.icon,
+                                temp: select2[i].temp_c
                             }]
                         }
                         //   console.log(perfectData)
                         setData1Hr(perfectData)
+
+
+                        const select3 = data10Days.data.forecast.forecastday;
+                        console.log(data10Days.data.forecast.forecastday)
+                        let complete10Days = [];
+                        for (let i = 0; i < select3.length; i++) {
+                            complete10Days = [...complete10Days, {
+                                minT: select3[i].day.mintemp_c,
+                                maxT: select3[i].day.maxtemp_c,
+                                pop: select3[i].day.daily_chance_of_rain,
+                                icon: select3[i].day.condition.icon,
+                                day: i === 0 ? '今天' : getDay[(days + i) % 7]
+                            }]
+                        }
+                        setdata10Days(complete10Days)
                         //  setClosestStationData(closestStation)
 
 
@@ -154,10 +177,12 @@ export default function ContainerV2() {
 
 
     }, []);
+    console.log(data10Days)
     return (
         <div className="ContainerV2">
             <MainInfo weatherData={weatherData} />
             <Row24Hr data1Hr={data1Hr} />
+            <Data10Days data10Days={data10Days} />
         </div>
     )
 }
