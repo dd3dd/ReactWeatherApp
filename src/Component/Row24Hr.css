@@ -14,14 +14,15 @@
 
 .Row24Hr {
     width: 90%;
-    background-color: #59a5d8;
-    height: 150px;
+    /* height: 150px; */
     border-radius: 10px;
     display: flex;
     overflow-x: auto;
-    margin-top: -10px;
-    position: absolute;
-    top: 230px;
+    overflow-y: hidden;
+    /* margin-top: -10px; */
+    /* position: absolute;
+    top: 220px; */
+    /* transition: opacity 0.3s ease-in-out; */
 }
 
 .Item1Hr {

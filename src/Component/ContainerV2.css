@@ -2,11 +2,10 @@
     width: 370px;
     min-height: 550px;
     overflow-y: auto;
-    background-color: #8ecae6;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-
+    background-position: 20% 76%;
 }

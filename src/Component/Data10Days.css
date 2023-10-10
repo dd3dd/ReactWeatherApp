@@ -1,11 +1,9 @@
 .Data10Days {
     width: 90%;
-    height: 550px;
-    background-color: #59a5d8;
-
+    /* height: 550px; */
     border-radius: 10px;
-    position: absolute;
-    top: 380px;
+    /* position: absolute; */
+    /* top: 380px; */
 }
 
 .SubTitle {

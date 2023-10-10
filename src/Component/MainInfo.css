@@ -2,36 +2,39 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 40%;
-    position: absolute;
-    top: 10px;
-    justify-content: center;
+    min-height: 150px;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    margin-top: 30px;
+    /* background-color: rgba(255, 255, 255, 1);
+    width: 90%; */
 }
 
 .UserPos {
     position: absolute;
     font-size: 2em;
-    top: 25px;
+    top: 0px;
 }
 
 .Temp {
     position: absolute;
     font-size: 5em;
     left: 15px;
-    top: 40px;
+    top: 15px;
 }
 
 .Weather {
-    position: relative;
+    position: absolute;
     font-size: 1.2em;
-    top: 75px;
+    top: 115px;
 
 }
 
 .MinMaxT {
     position: relative;
     font-size: 1.2em;
-    top: 55px;
+    top: 140px;
     left: 5px;
 
 }

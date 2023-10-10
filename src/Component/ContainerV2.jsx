@@ -16,11 +16,19 @@ export default function ContainerV2() {
     //  const [userPos, setUserPos] = useState(null);
     const currentTime = new Date();
     const days = currentTime.getDay();
-
     const hours = currentTime.getHours();
     const [weatherData, setWeatherData] = useState({});
     const [data1Hr, setData1Hr] = useState();
     const [data10Days, setdata10Days] = useState();
+    const [background, setBackground] = useState();
+    const [boxColor, setBoxColor] = useState();
+    const [dayBoxPos, setdayBoxPos] = useState();
+    const [dayBoxHeight, setdayBoxHeight] = useState();
+    const [day10BoxPos, setday10BoxPos] = useState();
+    const [day10BoxHeight, setday10BoxHeight] = useState();
+    const [minMaxOpacity, setminMaxOpacity] = useState();
+    const [weatherOpacity, setweatherOpacity] = useState();
+    // const [opacityObj,setOpacityObj]=useState()
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     const weatherapieKey = '9c46040661fe4027a7835737230710'
     useEffect(() => {
@@ -90,7 +98,25 @@ export default function ContainerV2() {
                             weather: weather, minT: `最低${currentMin}°`,
                             maxT: `最高${currentMax}°`
                         };
+
                         setWeatherData(weatherObj)
+                        if (weatherObj.weather.includes('晴') && hours >= 6 && hours < 18) {
+                            setBackground(`url('./src/assets/sunny.jpg')`)
+                            setBoxColor('#3077BF')
+                        }
+                        else if (weatherObj.weather.includes('晴') && hours >= 18 || hours < 6) {
+                            setBackground(`url('./src/assets/nightsunny.jpg')`)
+                            setBoxColor('#2B2E4D')
+                        }
+                        else if (hours >= 6 && hours < 18) {
+                            setBackground(`url('./src/assets/cloudy.jpg')`)
+                            setBoxColor('#4F5F75')
+                        }
+                        else if (hours >= 18 || hours < 6) {
+                            setBackground(`url('./src/assets/cloudynight.jpg')`)
+                            setBoxColor('#4F5F75')
+                        }
+
 
                         let perfectData = [];
                         const select1 = data1Hr.data.forecast.forecastday[0].hour;
@@ -178,11 +204,45 @@ export default function ContainerV2() {
 
     }, []);
     console.log(data10Days)
+
+    const handleScroll = (e) => {
+        const scrollY = e.target.scrollTop;
+        if (scrollY > 100) {
+            setdayBoxPos({ position: 'sticky', top: '120px' });
+            setdayBoxHeight(150 - scrollY + 100);
+        }
+        else {
+            setdayBoxPos({ position: 'absolute', top: '220px' });
+            setdayBoxHeight(150);
+        }
+        if (scrollY > 255) {
+            setday10BoxPos({ position: 'sticky', top: '120px' });
+            setday10BoxHeight(550 - scrollY + 255);
+
+
+        }
+        else {
+            setday10BoxPos({ position: 'absolute', top: '380px' });
+            setday10BoxHeight(550);
+        }
+
+
+        const opacityminMax = 1 - (scrollY / 100);
+        setminMaxOpacity(opacityminMax)
+
+        const opacityWeather = 1 - (scrollY / 180);
+        setweatherOpacity(opacityWeather)
+
+
+        console.log(scrollY)
+    }
     return (
-        <div className="ContainerV2">
-            <MainInfo weatherData={weatherData} />
-            <Row24Hr data1Hr={data1Hr} />
-            <Data10Days data10Days={data10Days} />
+        <div style={{ backgroundImage: background }} onScroll={handleScroll} className="ContainerV2">
+            {/* <div style={{ height: '30px' }}></div> */}
+            <MainInfo weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
+            <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxPos={dayBoxPos} dayBoxHeight={dayBoxHeight} />
+            <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxPos={day10BoxPos} day10BoxHeight={day10BoxHeight} />
+
         </div>
     )
 }
