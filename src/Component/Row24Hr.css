@@ -20,8 +20,8 @@
     overflow-x: auto;
     overflow-y: hidden;
     /* margin-top: -10px; */
-    /* position: absolute;
-    top: 220px; */
+    position: sticky;
+    /* top: 220px; */
     /* transition: opacity 0.3s ease-in-out; */
 }
 

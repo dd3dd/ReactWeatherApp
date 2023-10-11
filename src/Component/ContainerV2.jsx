@@ -22,9 +22,8 @@ export default function ContainerV2() {
     const [data10Days, setdata10Days] = useState();
     const [background, setBackground] = useState();
     const [boxColor, setBoxColor] = useState();
-    const [dayBoxPos, setdayBoxPos] = useState();
-    const [dayBoxHeight, setdayBoxHeight] = useState();
-    const [day10BoxPos, setday10BoxPos] = useState();
+    const [dayBoxTop, setdayBoxTop] = useState();
+    const [day10BoxTop, setday10BoxTop] = useState();
     const [day10BoxHeight, setday10BoxHeight] = useState();
     const [minMaxOpacity, setminMaxOpacity] = useState();
     const [weatherOpacity, setweatherOpacity] = useState();
@@ -208,22 +207,22 @@ export default function ContainerV2() {
     const handleScroll = (e) => {
         const scrollY = e.target.scrollTop;
         if (scrollY > 100) {
-            setdayBoxPos({ position: 'sticky', top: '120px' });
-            setdayBoxHeight(150 - scrollY + 100);
+            setdayBoxTop({ top: '120px', height: 150 - scrollY + 100 });
+            // setdayBoxHeight(150 - scrollY + 100);
         }
         else {
-            setdayBoxPos({ position: 'absolute', top: '220px' });
-            setdayBoxHeight(150);
+            setdayBoxTop({ top: 220 - scrollY, height: 150 });
+            // setdayBoxHeight(150);
         }
         if (scrollY > 255) {
-            setday10BoxPos({ position: 'sticky', top: '120px' });
-            setday10BoxHeight(550 - scrollY + 255);
+            setday10BoxTop({ top: '120px', height: 550 - scrollY + 255 });
+            // setday10BoxHeight(550 - scrollY + 255);
 
 
         }
         else {
-            setday10BoxPos({ position: 'absolute', top: '380px' });
-            setday10BoxHeight(550);
+            setday10BoxTop({ top: '380px', height: 550 });
+            // setday10BoxHeight(550);
         }
 
 
@@ -240,9 +239,10 @@ export default function ContainerV2() {
         <div style={{ backgroundImage: background }} onScroll={handleScroll} className="ContainerV2">
             {/* <div style={{ height: '30px' }}></div> */}
             <MainInfo weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
-            <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxPos={dayBoxPos} dayBoxHeight={dayBoxHeight} />
-            <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxPos={day10BoxPos} day10BoxHeight={day10BoxHeight} />
-
+            <div className="aa">
+                <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxTop={dayBoxTop} />
+                <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
+            </div>
         </div>
     )
 }
