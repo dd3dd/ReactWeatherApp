@@ -3,16 +3,58 @@
     height: 530px;
     border-radius: 10px;
     position: absolute;
-    top: 380px;
-    margin-top: 50px;
+    top: 10px;
+
     overflow-y: auto;
 }
 
-.SubTitle {
-    position: relative;
+.SubTitle24 {
+    position: sticky;
+    top: 140px;
+    z-index: 1;
     width: 90%;
     height: 30px;
-    margin: 0 auto;
+    border-radius: 10px;
+    transition: opacity 0.1s ease-in-out;
+
+
+}
+
+.bb {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 40px;
+    min-height: 560px;
+}
+
+.SubTitleText24 {
+    font-size: 1px;
+    color: #ced4da;
+    position: absolute;
+    top: 8px;
+    left: 13px;
+
+}
+
+.myhr24 {
+    position: absolute;
+    top: 15px;
+    border: 1px solid rgba(206, 212, 218, 0.7);
+    width: 90%;
+    left: 15px;
+}
+
+
+.SubTitle {
+    position: sticky;
+    top: 135px;
+    width: 90%;
+    height: 30px;
+    border-radius: 10px;
+    z-index: 1;
 
 }
 
@@ -20,15 +62,17 @@
     font-size: 1px;
     color: #ced4da;
     position: absolute;
-    top: 10px;
+    top: 8px;
+    left: 13px;
 
 }
 
 .myhr {
     position: absolute;
-    top: 20px;
+    top: 15px;
     border: 1px solid rgba(206, 212, 218, 0.7);
-    width: 100%;
+    width: 90%;
+    left: 15px;
 }
 
 .Data10DaysItem {
@@ -38,6 +82,7 @@
     position: relative;
     font-size: 8px;
     justify-content: space-around;
+    top: 20px
 }
 
 .Day {

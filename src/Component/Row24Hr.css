@@ -12,16 +12,29 @@
     /* 圓角 */
 }
 
+.aa {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 35px;
+    min-height: 205px;
+
+}
+
 .Row24Hr {
     width: 90%;
     /* height: 150px; */
     border-radius: 10px;
     display: flex;
+
     overflow-x: auto;
     overflow-y: hidden;
-    /* margin-top: -10px; */
-    position: sticky;
-    /* top: 220px; */
+    /* margin-top: 10px; */
+    position: absolute;
+    /* padding-top: 10px; */
+    top: 10px;
     /* transition: opacity 0.3s ease-in-out; */
 }
 
@@ -29,8 +42,9 @@
     display: flex;
     flex-direction: column;
     min-width: 25%;
-    height: 100%;
+    /* height: 5%; */
     align-items: center;
+    margin-top: 25px;
 }
 
 .Time {

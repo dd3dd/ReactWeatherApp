@@ -206,24 +206,37 @@ export default function ContainerV2() {
 
     const handleScroll = (e) => {
         const scrollY = e.target.scrollTop;
-        if (scrollY > 100) {
-            setdayBoxTop({ top: '120px', height: 150 - scrollY + 100 });
+
+
+        const scrollSpeed = 0.5;
+
+        // 获取滚动的偏移量
+        const scrollDelta = e.deltaY * scrollSpeed;
+
+        // 更新滚动容器的 scrollTop
+        e.currentTarget.scrollTop += scrollDelta;
+        console.log(scrollDelta)
+
+        // 阻止默认滚动行为
+
+        if (scrollY > 250) {
+            setdayBoxTop(0);
             // setdayBoxHeight(150 - scrollY + 100);
         }
         else {
-            setdayBoxTop({ top: 220 - scrollY, height: 150 });
+            setdayBoxTop(1);
             // setdayBoxHeight(150);
         }
-        if (scrollY > 255) {
-            setday10BoxTop({ top: '120px', height: 550 - scrollY + 255 });
-            // setday10BoxHeight(550 - scrollY + 255);
+        // if (scrollY > 255) {
+        //     setday10BoxTop({ top: '120px', height: 550 - scrollY + 255 });
+        //     // setday10BoxHeight(550 - scrollY + 255);
 
 
-        }
-        else {
-            setday10BoxTop({ top: '380px', height: 550 });
-            // setday10BoxHeight(550);
-        }
+        // }
+        // else {
+        //     setday10BoxTop({ top: '380px', height: 550 });
+        //     // setday10BoxHeight(550);
+        // }
 
 
         const opacityminMax = 1 - (scrollY / 100);
@@ -233,16 +246,17 @@ export default function ContainerV2() {
         setweatherOpacity(opacityWeather)
 
 
-        console.log(scrollY)
+        //console.log(scrollY)
     }
+
     return (
-        <div style={{ backgroundImage: background }} onScroll={handleScroll} className="ContainerV2">
+        <div style={{ background: background }} onScroll={handleScroll} className="ContainerV2">
             {/* <div style={{ height: '30px' }}></div> */}
-            <MainInfo weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
-            <div className="aa">
-                <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxTop={dayBoxTop} />
-                <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
-            </div>
+            <MainInfo background={background} weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
+
+            <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxTop={dayBoxTop} />
+            <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
+
         </div>
     )
 }

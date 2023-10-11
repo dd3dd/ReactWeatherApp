@@ -7,6 +7,7 @@
     top: 0px;
     z-index: 1;
     margin-top: 30px;
+    width: 90%;
     /* background-color: rgba(255, 255, 255, 1);
     width: 90%; */
 }
@@ -20,7 +21,7 @@
 .Temp {
     position: absolute;
     font-size: 5em;
-    left: 15px;
+    margin-left: 10px;
     top: 15px;
 }
 
