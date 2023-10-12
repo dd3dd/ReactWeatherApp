@@ -30,6 +30,11 @@ export default function ContainerV2() {
     const [mainInfoStyle, setMainInfoStyle] = useState();
     const [minMaxOpacity, setminMaxOpacity] = useState();
     const [weatherOpacity, setweatherOpacity] = useState();
+    const [tempOpacity, settempOpacity] = useState();
+    const [tempV2Opacity, settempV2Opacity] = useState();
+    const [backgroundPos1, setbackgroundPos1] = useState();
+    const [backgroundPos2, setbackgroundPos2] = useState();
+    const [backgroundPos3, setbackgroundPos3] = useState();
     // const [opacityObj,setOpacityObj]=useState()
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     const weatherapieKey = '9c46040661fe4027a7835737230710'
@@ -61,7 +66,7 @@ export default function ContainerV2() {
 
                         const weekData = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}
 &elementName=MinT,MaxT,PoP12h,WeatherDescription`)
-                        const data1Hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&key=${weatherapieKey}`)
+                        const data1Hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=zh_tw&key=${weatherapieKey}`)
                         const data10Days = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=10&hour=9&lang=zh_tw&key=${weatherapieKey}`)
                         //const future24hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=
                         // zh_tw&key=${weatherapieKey}`)
@@ -69,6 +74,7 @@ export default function ContainerV2() {
                         const combineData = [...dataA00001.data.records.location,
                         ...dataA00003.data.records.location]
                         console.log(data1Hr.data)
+                        //  console.log(data10Days.data)
                         // console.log(future24hr.data)
                         //   setObservatory(combineData);
 
@@ -85,16 +91,24 @@ export default function ContainerV2() {
                             }
                         })
                         const findTown = weekData.data.records.locations[0].location;
-                        const currentMin = findTown.find(e => e.locationName === town).weatherElement[1]
-                            .time[0].elementValue[0].value;
-                        const currentMax = findTown.find(e => e.locationName === town).weatherElement[3]
-                            .time[0].elementValue[0].value;
+                        // const currentMin = findTown.find(e => e.locationName === town).weatherElement[1]
+                        //     .time[0].elementValue[0].value;
+                        // const currentMax = findTown.find(e => e.locationName === town).weatherElement[3]
+                        //     .time[0].elementValue[0].value;
+
 
                         //  console.log(currentMin, currentMax)
 
                         //console.log(closestStation)
-                        const temp = Math.round(closestStation.weatherElement[0].elementValue);
-                        const weather = closestStation.weatherElement[1].elementValue;
+                        // const temp = Math.round(closestStation.weatherElement[0].elementValue);
+                        const temp = data1Hr.data.current.temp_c;
+                        // const weather = closestStation.weatherElement[1].elementValue;
+                        let weather = data1Hr.data.current.condition.text;
+                        const currentMin = Math.round(data1Hr.data.forecast.forecastday[0].day.mintemp_c);
+                        const currentMax = Math.round(data1Hr.data.forecast.forecastday[0].day.maxtemp_c);
+                        if (weather.includes('週边')) {
+                            weather = weather.replace('週边', '周邊')
+                        }
                         const weatherObj = {
                             userPos: town, temp: `${temp}°`,
                             weather: weather, minT: `最低${currentMin}°`,
@@ -160,7 +174,7 @@ export default function ContainerV2() {
 
 
                         const select3 = data10Days.data.forecast.forecastday;
-                        console.log(data10Days.data.forecast.forecastday)
+                        // console.log(data10Days.data.forecast.forecastday)
                         let complete10Days = [];
                         for (let i = 0; i < select3.length; i++) {
                             complete10Days = [...complete10Days, {
@@ -205,7 +219,7 @@ export default function ContainerV2() {
 
 
     }, []);
-    console.log(data10Days)
+    // console.log(data10Days)
 
     const handleScroll = (e) => {
         const scrollY = e.target.scrollTop;
@@ -214,6 +228,8 @@ export default function ContainerV2() {
 
 
         // 阻止默认滚动行为
+
+
         if (scrollY > 60) {
             setMainInfoStyle(1);
         }
@@ -240,21 +256,25 @@ export default function ContainerV2() {
         // }
 
 
-        const opacityminMax = 1 - (scrollY / 60);
+        const opacityminMax = 1 - (scrollY / 10);
         setminMaxOpacity(opacityminMax)
 
-        const opacityWeather = 1 - (scrollY / 70);
+        const opacityWeather = 1 - (scrollY / 50);
         setweatherOpacity(opacityWeather)
 
+        const opacityTemp = 1 - (scrollY / 80);
+        settempOpacity(opacityTemp)
 
-        console.log(scrollY)
+
+        // console.log(scrollY)
     }
 
     return (
         <div style={{ background: background }} onScroll={handleScroll} className="ContainerV2">
             {/* <div style={{ height: '30px' }}></div> */}
-            <MainInfo background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
-            <div className="aa"></div>
+            <MainInfo background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
+                minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} />
+            {/* <div className="aa"></div> */}
             <div style={{ backgroundColor: boxColor, opacity: dayBoxTop }} className='SubTitle24'>
                 <p className='SubTitleText24'>每小時天氣預報</p>
                 <hr className='myhr24'></hr>

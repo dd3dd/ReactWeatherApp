@@ -10,7 +10,7 @@
 
 .SubTitle24 {
     position: sticky;
-    top: 140px;
+    top: 180px;
     z-index: 1;
     width: 90%;
     min-height: 30px;
@@ -41,7 +41,7 @@
 
 .myhr24 {
     position: absolute;
-    top: 13px;
+    top: 12px;
     border: 1px solid rgba(206, 212, 218, 0.7);
     width: 90%;
     left: 15px;
@@ -50,7 +50,7 @@
 
 .SubTitle {
     position: sticky;
-    top: 135px;
+    top: 180px;
     width: 90%;
     height: 30px;
     border-radius: 10px;
