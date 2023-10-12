@@ -15,26 +15,27 @@
 .aa {
     position: relative;
     width: 100%;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
-    top: 35px;
-    min-height: 205px;
+    align-items: center; */
+    top: 30px;
+    min-height: 50px;
 
 }
 
 .Row24Hr {
     width: 90%;
-    /* height: 150px; */
+    min-height: 150px;
     border-radius: 10px;
     display: flex;
 
     overflow-x: auto;
     overflow-y: hidden;
     /* margin-top: 10px; */
-    position: absolute;
+    position: relative;
     /* padding-top: 10px; */
-    top: 10px;
+    top: 0px;
+    margin-top: -15px;
     /* transition: opacity 0.3s ease-in-out; */
 }
 
@@ -44,7 +45,7 @@
     min-width: 25%;
     /* height: 5%; */
     align-items: center;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .Time {

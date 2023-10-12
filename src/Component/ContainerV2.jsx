@@ -4,6 +4,8 @@ import './ContainerV2.css'
 import MainInfo from "./MainInfo";
 import Row24Hr from "./Row24Hr";
 import Data10Days from "./Data10Days";
+import './Row24Hr.css'
+import './Data10Days.css'
 export default function ContainerV2() {
     const getDay = { 0: '週日', 1: '週一', 2: '週二', 3: '週三', 4: '週四', 5: '週五', 6: '週六' }
     const cityCode = {
@@ -25,6 +27,7 @@ export default function ContainerV2() {
     const [dayBoxTop, setdayBoxTop] = useState();
     const [day10BoxTop, setday10BoxTop] = useState();
     const [day10BoxHeight, setday10BoxHeight] = useState();
+    const [mainInfoStyle, setMainInfoStyle] = useState();
     const [minMaxOpacity, setminMaxOpacity] = useState();
     const [weatherOpacity, setweatherOpacity] = useState();
     // const [opacityObj,setOpacityObj]=useState()
@@ -208,18 +211,16 @@ export default function ContainerV2() {
         const scrollY = e.target.scrollTop;
 
 
-        const scrollSpeed = 0.5;
 
-        // 获取滚动的偏移量
-        const scrollDelta = e.deltaY * scrollSpeed;
-
-        // 更新滚动容器的 scrollTop
-        e.currentTarget.scrollTop += scrollDelta;
-        console.log(scrollDelta)
 
         // 阻止默认滚动行为
-
-        if (scrollY > 250) {
+        if (scrollY > 60) {
+            setMainInfoStyle(1);
+        }
+        else {
+            setMainInfoStyle(0);
+        }
+        if (scrollY > 220) {
             setdayBoxTop(0);
             // setdayBoxHeight(150 - scrollY + 100);
         }
@@ -239,21 +240,25 @@ export default function ContainerV2() {
         // }
 
 
-        const opacityminMax = 1 - (scrollY / 100);
+        const opacityminMax = 1 - (scrollY / 60);
         setminMaxOpacity(opacityminMax)
 
-        const opacityWeather = 1 - (scrollY / 180);
+        const opacityWeather = 1 - (scrollY / 70);
         setweatherOpacity(opacityWeather)
 
 
-        //console.log(scrollY)
+        console.log(scrollY)
     }
 
     return (
         <div style={{ background: background }} onScroll={handleScroll} className="ContainerV2">
             {/* <div style={{ height: '30px' }}></div> */}
-            <MainInfo background={background} weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
-
+            <MainInfo background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData} minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} />
+            <div className="aa"></div>
+            <div style={{ backgroundColor: boxColor, opacity: dayBoxTop }} className='SubTitle24'>
+                <p className='SubTitleText24'>每小時天氣預報</p>
+                <hr className='myhr24'></hr>
+            </div>
             <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxTop={dayBoxTop} />
             <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
 
