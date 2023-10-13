@@ -2,6 +2,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+
 }
 
 body {
@@ -25,7 +26,7 @@ h1 {
 }
 
 p {
-  color: aliceblue;
+  color: white;
   font-family: 'Noto Sans TC', sans-serif;
   font-weight: 500;
   font-size: 2em;

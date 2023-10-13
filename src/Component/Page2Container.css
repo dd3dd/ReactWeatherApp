@@ -1,0 +1,94 @@
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 1000px 2100px;
+    }
+
+    100% {
+        background-position: 1920px 2100px;
+    }
+}
+
+.Page2Container {
+    width: 370px;
+    height: 550px;
+    overflow-y: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background-color: #003049;
+}
+
+.MyText {
+    position: absolute;
+    left: 45px;
+    top: 30px;
+    font-size: 3em;
+}
+
+.SetPosText {
+    position: absolute;
+    left: 45px;
+    top: 290px;
+    font-size: 3em;
+}
+
+.CurrentPosBar {
+    position: absolute;
+    width: 90%;
+    height: 130px;
+    top: 130px;
+    border-radius: 20px;
+}
+
+.CurrentPosBarAnime {
+    position: absolute;
+    width: 90%;
+    height: 130px;
+    top: 130px;
+    border-radius: 20px;
+    animation: backgroundAnimation 150s linear infinite alternate;
+}
+
+.MyPos {
+    position: absolute;
+    font-size: 1.5em;
+    left: 20px;
+    top: 5px;
+}
+
+.PosInfo {
+    position: absolute;
+    font-size: 1em;
+    left: 20px;
+    top: 45px
+}
+
+.WeatherInfo {
+    position: absolute;
+    font-size: 1em;
+    left: 20px;
+    top: 95px
+}
+
+.TempInfo {
+    position: absolute;
+    font-size: 3.5em;
+    left: 220px;
+    top: -5px
+}
+
+.MinInfo {
+    position: absolute;
+    font-size: 1em;
+    left: 200px;
+    top: 95px
+}
+
+.MaxInfo {
+    position: absolute;
+    font-size: 1em;
+    left: 260px;
+    top: 95px
+}

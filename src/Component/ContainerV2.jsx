@@ -6,7 +6,9 @@ import Row24Hr from "./Row24Hr";
 import Data10Days from "./Data10Days";
 import './Row24Hr.css'
 import './Data10Days.css'
-export default function ContainerV2() {
+import Row24Header from "./Row24Header";
+import SettingPage from "./SettingPage";
+export default function ContainerV2({ }) {
     const getDay = { 0: '週日', 1: '週一', 2: '週二', 3: '週三', 4: '週四', 5: '週五', 6: '週六' }
     const cityCode = {
         '宜蘭縣': 'F-D0047-003', '桃園市': 'F-D0047-007', '新竹縣': 'F-D0047-011', '苗栗縣': 'F-D0047-015', '彰化縣': 'F-D0047-019',
@@ -33,6 +35,8 @@ export default function ContainerV2() {
     const [tempOpacity, settempOpacity] = useState();
     const [tempV2Opacity, settempV2Opacity] = useState();
     const [anime, setanime] = useState(1);
+    const [showHeader, setshowHeader] = useState('none')
+    const [currentPage, setcurrentPage] = useState(0);
 
     // const [opacityObj,setOpacityObj]=useState()
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
@@ -44,6 +48,8 @@ export default function ContainerV2() {
             navigator.geolocation.getCurrentPosition(function (position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
+                // const latitude = 49.26;
+                // const longitude = -123.109;
 
                 console.log("Latitude: " + latitude);
                 console.log("Longitude: " + longitude);
@@ -62,9 +68,10 @@ export default function ContainerV2() {
 
                         const dataA00003 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${myAuthorization}
 &elementName=TEMP,Weather&parameterName=CITY`)
-
-                        const weekData = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}
-&elementName=MinT,MaxT,PoP12h,WeatherDescription`)
+                        // const test = await axios.get(`https://nominatim.openstreetmap.org/search?q=桃園市中壢區&format=json&limit=1&addressdetails=1`)
+                        // console.log(test.data)
+                        // const weekData = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}
+                        // &elementName=MinT,MaxT,PoP12h,WeatherDescription`)
                         const data1Hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=zh_tw&key=${weatherapieKey}`)
                         const data10Days = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=10&hour=9&lang=zh_tw&key=${weatherapieKey}`)
                         //const future24hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=
@@ -89,7 +96,7 @@ export default function ContainerV2() {
                                 closestDistance = distance;
                             }
                         })
-                        const findTown = weekData.data.records.locations[0].location;
+                        // const findTown = weekData.data.records.locations[0].location;
                         // const currentMin = findTown.find(e => e.locationName === town).weatherElement[1]
                         //     .time[0].elementValue[0].value;
                         // const currentMax = findTown.find(e => e.locationName === town).weatherElement[3]
@@ -102,8 +109,9 @@ export default function ContainerV2() {
                         // const temp = Math.round(closestStation.weatherElement[0].elementValue);
                         const temp = data1Hr.data.current.temp_c;
                         // const weather = closestStation.weatherElement[1].elementValue;
-                        // let weather = data1Hr.data.current.condition.text;
-                        let weather = '多雲';
+                        let weather = data1Hr.data.current.condition.text;
+                        // let weather = '多雲';
+
 
                         const currentMin = Math.round(data1Hr.data.forecast.forecastday[0].day.mintemp_c);
                         const currentMax = Math.round(data1Hr.data.forecast.forecastday[0].day.maxtemp_c);
@@ -143,8 +151,17 @@ export default function ContainerV2() {
                             setBoxColor('#4F5F75')
                             setanime(0)
                         }
+                        else if (hours >= 6 && hours < 18) {
+                            setBackground(`url('./src/assets/cloudy.jpg')`)
+                            setBoxColor('#4F5F75')
+                        }
+                        else {
+                            setBackground(`url('./src/assets/cloudynight.jpg')`)
+                            setBoxColor('#4F5F75')
+                        }
 
-                        // setBackground(`url('./src/assets/rain.jpg')`)
+
+                        // setBackground(`url('./src/assets/cloudy.jpg')`)
                         // setBoxColor('#4F5F75')
 
 
@@ -185,7 +202,7 @@ export default function ContainerV2() {
                         }
                         //   console.log(perfectData)
                         setData1Hr(perfectData)
-
+                        setshowHeader('block');
 
                         const select3 = data10Days.data.forecast.forecastday;
                         // console.log(data10Days.data.forecast.forecastday)
@@ -214,6 +231,7 @@ export default function ContainerV2() {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
                         console.log("用户拒绝了位置请求");
+                        alert('請開啟定位功能!!')
                         break;
                     case error.POSITION_UNAVAILABLE:
                         console.log("位置信息不可用");
@@ -282,20 +300,24 @@ export default function ContainerV2() {
 
         // console.log(scrollY)
     }
+    const changePos = () => {
+        setcurrentPage(1);
+        //  alert('aa')
+    }
 
     return (
-        <div style={{ backgroundImage: background }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
-            {/* <div style={{ height: '30px' }}></div> */}
-            <MainInfo background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
-                minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
-            <div className="aa"></div>
-            <div style={{ backgroundColor: boxColor, opacity: dayBoxTop }} className='SubTitle24'>
-                <p className='SubTitleText24'>每小時天氣預報</p>
-                <hr className='myhr24'></hr>
-            </div>
-            <Row24Hr data1Hr={data1Hr} boxColor={boxColor} dayBoxTop={dayBoxTop} />
-            <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
-
-        </div>
+        <>
+            {currentPage === 0 ?
+                <div style={{ backgroundImage: background }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
+                    {/* <div style={{ height: '30px' }}></div> */}
+                    <MainInfo changePos={changePos} background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
+                        minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
+                    <div className="aa"></div>
+                    <Row24Header boxColor={boxColor} showHeader={showHeader} />
+                    <Row24Hr data1Hr={data1Hr} boxColor={boxColor} />
+                    <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
+                </div> : <SettingPage background={background} weatherData={weatherData} anime={anime} />
+            }
+        </>
     )
 }

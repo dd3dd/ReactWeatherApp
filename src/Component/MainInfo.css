@@ -37,7 +37,7 @@
     /* margin-bottom: 30px; */
     width: 100%;
     /* background-position: 1000px 1440px; */
-    animation: backgroundAnimation 5s linear infinite alternate;
+    animation: backgroundAnimation 250s linear infinite alternate;
 
     /* 延迟动画开始时间以匹配动画周期 */
     /* background-color: rgba(255, 255, 255, 1);
@@ -47,7 +47,7 @@
 .MainInfoV2 {
     display: flex;
     font-size: 8px;
-    top: 0px;
+    top: 40px;
     position: relative;
     transition: opacity 0.2s ease-in-out;
 }
@@ -56,13 +56,16 @@
     position: absolute;
     font-size: 2em;
     top: 20px;
+    margin: 0;
 }
 
 .Temp {
     position: absolute;
     font-size: 5em;
     margin-left: 10px;
+    margin-bottom: 0px;
     top: 35px;
+
 }
 
 .TempV2 {
@@ -71,20 +74,23 @@
 
 .WeatherV2 {
     margin-left: 10px;
+
 }
 
 .Weather {
     position: absolute;
     font-size: 1.1em;
     top: 140px;
+    margin-bottom: 0px;
 
 }
 
 .MinMaxT {
     position: relative;
     font-size: 1.1em;
-    top: 140px;
+    top: 165px;
     left: 5px;
+    margin-bottom: 0px;
 
 
 }
