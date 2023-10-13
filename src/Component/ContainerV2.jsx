@@ -63,11 +63,11 @@ export default function ContainerV2({ }) {
                         const town = address.town || address.suburb || address.village || address.city;
                         console.log(city, town, currentCityCode)
                         // setUserPos(town)
-                        const dataA00001 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=${myAuthorization}
-&elementName=TEMP,Weather&parameterName=CITY`)
+                        //                         const dataA00001 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=${myAuthorization}
+                        // &elementName=TEMP,Weather&parameterName=CITY`)
 
-                        const dataA00003 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${myAuthorization}
-&elementName=TEMP,Weather&parameterName=CITY`)
+                        //                         const dataA00003 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${myAuthorization}
+                        // &elementName=TEMP,Weather&parameterName=CITY`)
                         // const test = await axios.get(`https://nominatim.openstreetmap.org/search?q=桃園市中壢區&format=json&limit=1&addressdetails=1`)
                         // console.log(test.data)
                         // const weekData = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/${currentCityCode}?Authorization=${myAuthorization}
@@ -77,25 +77,25 @@ export default function ContainerV2({ }) {
                         //const future24hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=
                         // zh_tw&key=${weatherapieKey}`)
                         //console.log(dataA00001.data, dataA00003.data)
-                        const combineData = [...dataA00001.data.records.location,
-                        ...dataA00003.data.records.location]
+                        // const combineData = [...dataA00001.data.records.location,
+                        // ...dataA00003.data.records.location]
                         console.log(data1Hr.data)
                         //  console.log(data10Days.data)
                         // console.log(future24hr.data)
                         //   setObservatory(combineData);
 
-                        let closestStation = null;
-                        let closestDistance = Infinity;
-                        combineData.forEach(obj => {
-                            const latitudeDiff = Math.abs(latitude - obj.lat);
-                            const longitudeDiff = Math.abs(longitude - obj.lon);
-                            const distance = Math.sqrt(latitudeDiff ** 2 + longitudeDiff ** 2);
+                        // let closestStation = null;
+                        // let closestDistance = Infinity;
+                        // combineData.forEach(obj => {
+                        //     const latitudeDiff = Math.abs(latitude - obj.lat);
+                        //     const longitudeDiff = Math.abs(longitude - obj.lon);
+                        //     const distance = Math.sqrt(latitudeDiff ** 2 + longitudeDiff ** 2);
 
-                            if (distance < closestDistance) {
-                                closestStation = obj;
-                                closestDistance = distance;
-                            }
-                        })
+                        //     if (distance < closestDistance) {
+                        //         closestStation = obj;
+                        //         closestDistance = distance;
+                        //     }
+                        // })
                         // const findTown = weekData.data.records.locations[0].location;
                         // const currentMin = findTown.find(e => e.locationName === town).weatherElement[1]
                         //     .time[0].elementValue[0].value;
@@ -300,8 +300,8 @@ export default function ContainerV2({ }) {
 
         // console.log(scrollY)
     }
-    const changePos = () => {
-        setcurrentPage(1);
+    const changePage = (num) => {
+        setcurrentPage(num);
         //  alert('aa')
     }
 
@@ -310,13 +310,13 @@ export default function ContainerV2({ }) {
             {currentPage === 0 ?
                 <div style={{ backgroundImage: background }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
                     {/* <div style={{ height: '30px' }}></div> */}
-                    <MainInfo changePos={changePos} background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
+                    <MainInfo changePage={changePage} background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
                         minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
                     <div className="aa"></div>
                     <Row24Header boxColor={boxColor} showHeader={showHeader} />
                     <Row24Hr data1Hr={data1Hr} boxColor={boxColor} />
                     <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
-                </div> : <SettingPage background={background} weatherData={weatherData} anime={anime} />
+                </div> : <SettingPage changePage={changePage} background={background} weatherData={weatherData} anime={anime} />
             }
         </>
     )

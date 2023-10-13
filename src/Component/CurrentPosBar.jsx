@@ -1,7 +1,7 @@
 import './Page2Container.css'
-export default function CurrentPosBar({ background = '', weatherData = {}, anime = 0 }) {
+export default function CurrentPosBar({ changePage, background = '', weatherData = {}, anime = 0 }) {
     return (
-        <div style={{ backgroundImage: background }} className={`CurrentPosBar${anime === 1 ?
+        <div onClick={() => changePage(0)} style={{ backgroundImage: background }} className={`CurrentPosBar${anime === 1 ?
             'Anime' : ''}`}>
             <p className='MyPos'>現在位置</p>
             <p className='PosInfo'>{weatherData.userPos}</p>
