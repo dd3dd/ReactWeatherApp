@@ -1,11 +1,11 @@
 import './MainInfo.css'
 export default function MainInfo({ weatherData, minMaxOpacity = 1, weatherOpacity = 1,
-    background, mainInfoStyle = 0, tempOpacity = 1 }) {
+    background, mainInfoStyle = 0, tempOpacity = 1, anime = 0 }) {
     if (!weatherData) {
         return null; // 或者您可以顯示一個載入中的狀態或錯誤消息
     }
     return (
-        <div className="MainInfo" style={{ background: background }}>
+        <div className={`MainInfo${anime === 1 ? 'Anime' : ''}`} style={{ backgroundImage: background }}>
             <p className='UserPos'>{weatherData.userPos}</p>
             <p style={{ opacity: tempOpacity }} className='Temp'>{weatherData.temp}</p> :
             <p style={{ opacity: weatherOpacity }} className='Weather'>{weatherData.weather}</p>

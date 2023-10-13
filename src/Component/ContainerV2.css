@@ -1,10 +1,10 @@
 @keyframes backgroundAnimation {
     0% {
-        background-position: 0% 50%;
+        background-position: 1000px 2100px;
     }
 
     100% {
-        background-position: 100% 50%;
+        background-position: 1920px 2100px;
     }
 }
 
@@ -17,6 +17,25 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    animation: backgroundAnimation 5s linear infinite;
+    /* background-position: 1000px 1440px; */
+    /* animation: backgroundAnimation 5s linear infinite alternate; */
+
+    /* 延迟动画开始时间以匹配动画周期 */
+
+}
+
+.ContainerV2Anime {
+    width: 370px;
+    height: 550px;
+    overflow-y: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    /* background-position: 1000px 1440px; */
+    animation: backgroundAnimation 5s linear infinite alternate;
+
+    /* 延迟动画开始时间以匹配动画周期 */
 
 }

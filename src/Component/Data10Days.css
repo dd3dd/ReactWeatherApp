@@ -10,7 +10,7 @@
 
 .SubTitle24 {
     position: sticky;
-    top: 180px;
+    top: 140px;
     z-index: 1;
     width: 90%;
     min-height: 30px;
@@ -31,11 +31,11 @@
 }
 
 .SubTitleText24 {
-    font-size: 1px;
+    font-size: 12px;
     color: #ced4da;
     position: absolute;
     top: 8px;
-    left: 13px;
+    left: 15px;
 
 }
 
@@ -50,7 +50,7 @@
 
 .SubTitle {
     position: sticky;
-    top: 180px;
+    top: 140px;
     width: 90%;
     height: 30px;
     border-radius: 10px;
@@ -59,11 +59,11 @@
 }
 
 .SubTitleText {
-    font-size: 1px;
+    font-size: 12px;
     color: #ced4da;
     position: absolute;
     top: 8px;
-    left: 13px;
+    left: 15px;
 
 }
 

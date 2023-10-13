@@ -1,10 +1,10 @@
 @keyframes backgroundAnimation {
     0% {
-        background-position: 0% 50%;
+        background-position: 1000px 2100px;
     }
 
     100% {
-        background-position: 100% 50%;
+        background-position: 1920px 2100px;
     }
 }
 
@@ -12,13 +12,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 200px;
+    min-height: 150px;
     position: sticky;
     top: 0px;
     z-index: 1;
     /* margin-bottom: 30px; */
     width: 100%;
-    animation: backgroundAnimation 5s linear infinite;
+    /* background-position: 1000px 1440px; */
+    /* animation: backgroundAnimation 5s linear infinite alternate; */
+
+    /* 延迟动画开始时间以匹配动画周期 */
+    /* background-color: rgba(255, 255, 255, 1);
+    width: 90%; */
+}
+
+.MainInfoAnime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 150px;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    /* margin-bottom: 30px; */
+    width: 100%;
+    /* background-position: 1000px 1440px; */
+    animation: backgroundAnimation 5s linear infinite alternate;
+
+    /* 延迟动画开始时间以匹配动画周期 */
     /* background-color: rgba(255, 255, 255, 1);
     width: 90%; */
 }

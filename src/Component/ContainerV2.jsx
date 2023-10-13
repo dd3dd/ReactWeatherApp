@@ -32,9 +32,8 @@ export default function ContainerV2() {
     const [weatherOpacity, setweatherOpacity] = useState();
     const [tempOpacity, settempOpacity] = useState();
     const [tempV2Opacity, settempV2Opacity] = useState();
-    const [backgroundPos1, setbackgroundPos1] = useState();
-    const [backgroundPos2, setbackgroundPos2] = useState();
-    const [backgroundPos3, setbackgroundPos3] = useState();
+    const [anime, setanime] = useState(1);
+
     // const [opacityObj,setOpacityObj]=useState()
     const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     const weatherapieKey = '9c46040661fe4027a7835737230710'
@@ -103,7 +102,9 @@ export default function ContainerV2() {
                         // const temp = Math.round(closestStation.weatherElement[0].elementValue);
                         const temp = data1Hr.data.current.temp_c;
                         // const weather = closestStation.weatherElement[1].elementValue;
-                        let weather = data1Hr.data.current.condition.text;
+                        // let weather = data1Hr.data.current.condition.text;
+                        let weather = '多雲';
+
                         const currentMin = Math.round(data1Hr.data.forecast.forecastday[0].day.mintemp_c);
                         const currentMax = Math.round(data1Hr.data.forecast.forecastday[0].day.maxtemp_c);
                         if (weather.includes('週边')) {
@@ -114,24 +115,37 @@ export default function ContainerV2() {
                             weather: weather, minT: `最低${currentMin}°`,
                             maxT: `最高${currentMax}°`
                         };
-
+                        setanime(1);
                         setWeatherData(weatherObj)
                         if (weatherObj.weather.includes('晴') && hours >= 6 && hours < 18) {
                             setBackground(`url('./src/assets/sunny.jpg')`)
                             setBoxColor('#3077BF')
+
                         }
-                        else if (weatherObj.weather.includes('晴') && hours >= 18 || hours < 6) {
+                        else if (weatherObj.weather.includes('晴') && hours >= 18 || (weatherObj.weather.includes('晴') && hours < 6)) {
                             setBackground(`url('./src/assets/nightsunny.jpg')`)
                             setBoxColor('#2B2E4D')
+
                         }
-                        else if (hours >= 6 && hours < 18) {
+                        else if (weatherObj.weather.includes('多雲') && hours >= 6 && hours < 18) {
                             setBackground(`url('./src/assets/cloudy.jpg')`)
                             setBoxColor('#4F5F75')
+
                         }
-                        else if (hours >= 18 || hours < 6) {
+                        else if ((weatherObj.weather.includes('多雲') && hours >= 18) || (weatherObj.weather.includes('多雲') && hours < 6) ||
+                            (weatherObj.weather.includes('陰'))) {
                             setBackground(`url('./src/assets/cloudynight.jpg')`)
                             setBoxColor('#4F5F75')
+
                         }
+                        else if (weatherObj.weather.includes('雨')) {
+                            setBackground(`url('./src/assets/rain2.gif')`)
+                            setBoxColor('#4F5F75')
+                            setanime(0)
+                        }
+
+                        // setBackground(`url('./src/assets/rain.jpg')`)
+                        // setBoxColor('#4F5F75')
 
 
                         let perfectData = [];
@@ -270,11 +284,11 @@ export default function ContainerV2() {
     }
 
     return (
-        <div style={{ background: background }} onScroll={handleScroll} className="ContainerV2">
+        <div style={{ backgroundImage: background }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
             {/* <div style={{ height: '30px' }}></div> */}
             <MainInfo background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
-                minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} />
-            {/* <div className="aa"></div> */}
+                minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
+            <div className="aa"></div>
             <div style={{ backgroundColor: boxColor, opacity: dayBoxTop }} className='SubTitle24'>
                 <p className='SubTitleText24'>每小時天氣預報</p>
                 <hr className='myhr24'></hr>
