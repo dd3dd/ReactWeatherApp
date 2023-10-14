@@ -40,6 +40,7 @@
     height: 130px;
     top: 130px;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .CurrentPosBarAnime {
@@ -49,6 +50,7 @@
     top: 130px;
     border-radius: 20px;
     animation: backgroundAnimation 150s linear infinite alternate;
+    cursor: pointer;
 }
 
 .MyPos {

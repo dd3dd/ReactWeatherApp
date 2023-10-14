@@ -4,7 +4,6 @@
     border-radius: 10px;
     position: absolute;
     top: 10px;
-
     overflow-y: auto;
 }
 
@@ -16,11 +15,9 @@
     min-height: 30px;
     border-radius: 10px;
     transition: opacity 0.1s ease-in-out;
-
-
 }
 
-.bb {
+.Data10DaysContainer {
     position: relative;
     width: 100%;
     display: flex;
@@ -36,7 +33,6 @@
     position: absolute;
     top: 8px;
     left: 15px;
-
 }
 
 .myhr24 {
@@ -47,7 +43,6 @@
     left: 15px;
 }
 
-
 .SubTitle {
     position: sticky;
     top: 140px;
@@ -55,7 +50,6 @@
     height: 30px;
     border-radius: 10px;
     z-index: 1;
-
 }
 
 .SubTitleText {
@@ -64,7 +58,6 @@
     position: absolute;
     top: 8px;
     left: 15px;
-
 }
 
 .myhr {
@@ -130,5 +123,4 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }

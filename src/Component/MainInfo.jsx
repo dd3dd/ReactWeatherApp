@@ -2,7 +2,7 @@ import './MainInfo.css'
 export default function MainInfo({ changePage, weatherData, minMaxOpacity = 1, weatherOpacity = 1,
     background, mainInfoStyle = 0, tempOpacity = 1, anime = 0 }) {
     if (!weatherData) {
-        return null; // 或者您可以顯示一個載入中的狀態或錯誤消息
+        return null;
     }
 
     return (

@@ -1,22 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import './ContainerV2.css'
 import MainInfo from "./MainInfo";
 import Row24Hr from "./Row24Hr";
 import Data10Days from "./Data10Days";
-import './Row24Hr.css'
-import './Data10Days.css'
 import Row24Header from "./Row24Header";
 import SettingPage from "./SettingPage";
+import './ContainerV2.css'
+
 export default function ContainerV2({ }) {
     const getDay = { 0: '週日', 1: '週一', 2: '週二', 3: '週三', 4: '週四', 5: '週五', 6: '週六' }
-    const cityCode = {
-        '宜蘭縣': 'F-D0047-003', '桃園市': 'F-D0047-007', '新竹縣': 'F-D0047-011', '苗栗縣': 'F-D0047-015', '彰化縣': 'F-D0047-019',
-        '南投縣': 'F-D0047-023', '雲林縣': 'F-D0047-027', '嘉義縣': 'F-D0047-031', '屏東縣': 'F-D0047-035', '臺東縣': 'F-D0047-039',
-        '花蓮縣': 'F-D0047-043', '澎湖縣': 'F-D0047-047', '基隆市': 'F-D0047-051', '新竹市': 'F-D0047-055', '嘉義市': 'F-D0047-059',
-        '臺北市': 'F-D0047-063', '高雄市': 'F-D0047-067', '新北市': 'F-D0047-071', '臺中市': 'F-D0047-075', '臺南市': 'F-D0047-079',
-        '連江縣': 'F-D0047-083', '金門縣': 'F-D0047-087'
-    }
     //  const [userPos, setUserPos] = useState(null);
     const currentTime = new Date();
     const days = currentTime.getDay();
@@ -26,31 +18,26 @@ export default function ContainerV2({ }) {
     const [data10Days, setdata10Days] = useState();
     const [background, setBackground] = useState();
     const [boxColor, setBoxColor] = useState();
-    const [dayBoxTop, setdayBoxTop] = useState();
-    const [day10BoxTop, setday10BoxTop] = useState();
-    const [day10BoxHeight, setday10BoxHeight] = useState();
     const [mainInfoStyle, setMainInfoStyle] = useState();
     const [minMaxOpacity, setminMaxOpacity] = useState();
     const [weatherOpacity, setweatherOpacity] = useState();
     const [tempOpacity, settempOpacity] = useState();
-    const [tempV2Opacity, settempV2Opacity] = useState();
     const [anime, setanime] = useState(1);
     const [showHeader, setshowHeader] = useState('none')
     const [currentPage, setcurrentPage] = useState(0);
+    const [page2Obj, setpage2Obj] = useState();
 
     // const [opacityObj,setOpacityObj]=useState()
-    const myAuthorization = 'CWB-75625081-4569-4414-93FD-FC371A92BAA4';
     const weatherapieKey = '9c46040661fe4027a7835737230710'
     useEffect(() => {
 
         if ("geolocation" in navigator) {
-            // 获取用户位置
+
             navigator.geolocation.getCurrentPosition(function (position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
+                const latitude = !page2Obj ? position.coords.latitude : page2Obj.Lat;
+                const longitude = !page2Obj ? position.coords.longitude : page2Obj.Lon;
                 // const latitude = 49.26;
                 // const longitude = -123.109;
-
                 console.log("Latitude: " + latitude);
                 console.log("Longitude: " + longitude);
 
@@ -59,9 +46,8 @@ export default function ContainerV2({ }) {
                         const userPos = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`)
                         const address = userPos.data.address;
                         const city = address.city;
-                        const currentCityCode = cityCode[city];
                         const town = address.town || address.suburb || address.village || address.city;
-                        console.log(city, town, currentCityCode)
+                        // console.log(city, town)
                         // setUserPos(town)
                         //                         const dataA00001 = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=${myAuthorization}
                         // &elementName=TEMP,Weather&parameterName=CITY`)
@@ -74,44 +60,10 @@ export default function ContainerV2({ }) {
                         // &elementName=MinT,MaxT,PoP12h,WeatherDescription`)
                         const data1Hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=zh_tw&key=${weatherapieKey}`)
                         const data10Days = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=10&hour=9&lang=zh_tw&key=${weatherapieKey}`)
-                        //const future24hr = await axios.get(`https://api.weatherapi.com/v1/forecast.json?q=${latitude}%2C${longitude}&days=2&lang=
-                        // zh_tw&key=${weatherapieKey}`)
-                        //console.log(dataA00001.data, dataA00003.data)
-                        // const combineData = [...dataA00001.data.records.location,
-                        // ...dataA00003.data.records.location]
-                        console.log(data1Hr.data)
-                        //  console.log(data10Days.data)
-                        // console.log(future24hr.data)
-                        //   setObservatory(combineData);
-
-                        // let closestStation = null;
-                        // let closestDistance = Infinity;
-                        // combineData.forEach(obj => {
-                        //     const latitudeDiff = Math.abs(latitude - obj.lat);
-                        //     const longitudeDiff = Math.abs(longitude - obj.lon);
-                        //     const distance = Math.sqrt(latitudeDiff ** 2 + longitudeDiff ** 2);
-
-                        //     if (distance < closestDistance) {
-                        //         closestStation = obj;
-                        //         closestDistance = distance;
-                        //     }
-                        // })
-                        // const findTown = weekData.data.records.locations[0].location;
-                        // const currentMin = findTown.find(e => e.locationName === town).weatherElement[1]
-                        //     .time[0].elementValue[0].value;
-                        // const currentMax = findTown.find(e => e.locationName === town).weatherElement[3]
-                        //     .time[0].elementValue[0].value;
-
-
-                        //  console.log(currentMin, currentMax)
-
-                        //console.log(closestStation)
-                        // const temp = Math.round(closestStation.weatherElement[0].elementValue);
+                        //console.log(data1Hr.data)
                         const temp = data1Hr.data.current.temp_c;
-                        // const weather = closestStation.weatherElement[1].elementValue;
                         let weather = data1Hr.data.current.condition.text;
-                        // let weather = '多雲';
-
+                        //let weather = '雨';
 
                         const currentMin = Math.round(data1Hr.data.forecast.forecastday[0].day.mintemp_c);
                         const currentMax = Math.round(data1Hr.data.forecast.forecastday[0].day.maxtemp_c);
@@ -119,44 +71,44 @@ export default function ContainerV2({ }) {
                             weather = weather.replace('週边', '周邊')
                         }
                         const weatherObj = {
-                            userPos: town, temp: `${temp}°`,
+                            userPos: !page2Obj ? town : page2Obj.name, temp: `${Math.round(temp)}°`,
                             weather: weather, minT: `最低${currentMin}°`,
                             maxT: `最高${currentMax}°`
                         };
+                        // console.log(weatherObj)
                         setanime(1);
                         setWeatherData(weatherObj)
                         if (weatherObj.weather.includes('晴') && hours >= 6 && hours < 18) {
-                            setBackground(`url('./src/assets/sunny.jpg')`)
+                            setBackground(`url('/src/assets/sunny.jpg')`)
                             setBoxColor('#3077BF')
-
                         }
                         else if (weatherObj.weather.includes('晴') && hours >= 18 || (weatherObj.weather.includes('晴') && hours < 6)) {
-                            setBackground(`url('./src/assets/nightsunny.jpg')`)
+                            setBackground(`url('/src/assets/nightsunny.jpg')`)
                             setBoxColor('#2B2E4D')
 
                         }
                         else if (weatherObj.weather.includes('多雲') && hours >= 6 && hours < 18) {
-                            setBackground(`url('./src/assets/cloudy.jpg')`)
+                            setBackground(`url('/src/assets/cloudy.jpg')`)
                             setBoxColor('#4F5F75')
 
                         }
                         else if ((weatherObj.weather.includes('多雲') && hours >= 18) || (weatherObj.weather.includes('多雲') && hours < 6) ||
                             (weatherObj.weather.includes('陰'))) {
-                            setBackground(`url('./src/assets/cloudynight.jpg')`)
+                            setBackground(`url('/src/assets/cloudynight.jpg')`)
                             setBoxColor('#4F5F75')
 
                         }
                         else if (weatherObj.weather.includes('雨')) {
-                            setBackground(`url('./src/assets/rain2.gif')`)
+                            setBackground(`url('/src/assets/rain2.gif')`)
                             setBoxColor('#4F5F75')
                             setanime(0)
                         }
                         else if (hours >= 6 && hours < 18) {
-                            setBackground(`url('./src/assets/cloudy.jpg')`)
+                            setBackground(`url('/src/assets/cloudy.jpg')`)
                             setBoxColor('#4F5F75')
                         }
                         else {
-                            setBackground(`url('./src/assets/cloudynight.jpg')`)
+                            setBackground(`url('/src/assets/cloudynight.jpg')`)
                             setBoxColor('#4F5F75')
                         }
 
@@ -200,7 +152,6 @@ export default function ContainerV2({ }) {
                                 temp: select2[i].temp_c
                             }]
                         }
-                        //   console.log(perfectData)
                         setData1Hr(perfectData)
                         setshowHeader('block');
 
@@ -217,8 +168,6 @@ export default function ContainerV2({ }) {
                             }]
                         }
                         setdata10Days(complete10Days)
-                        //  setClosestStationData(closestStation)
-
 
                     } catch (error) {
                         console.error('Error:', error);
@@ -250,44 +199,17 @@ export default function ContainerV2({ }) {
         //   console.log(data1Hr)
 
 
-    }, []);
+    }, [page2Obj]);
     // console.log(data10Days)
 
     const handleScroll = (e) => {
         const scrollY = e.target.scrollTop;
-
-
-
-
-        // 阻止默认滚动行为
-
-
         if (scrollY > 60) {
             setMainInfoStyle(1);
         }
         else {
             setMainInfoStyle(0);
         }
-        if (scrollY > 220) {
-            setdayBoxTop(0);
-            // setdayBoxHeight(150 - scrollY + 100);
-        }
-        else {
-            setdayBoxTop(1);
-            // setdayBoxHeight(150);
-        }
-        // if (scrollY > 255) {
-        //     setday10BoxTop({ top: '120px', height: 550 - scrollY + 255 });
-        //     // setday10BoxHeight(550 - scrollY + 255);
-
-
-        // }
-        // else {
-        //     setday10BoxTop({ top: '380px', height: 550 });
-        //     // setday10BoxHeight(550);
-        // }
-
-
         const opacityminMax = 1 - (scrollY / 10);
         setminMaxOpacity(opacityminMax)
 
@@ -302,7 +224,9 @@ export default function ContainerV2({ }) {
     }
     const changePage = (num) => {
         setcurrentPage(num);
-        //  alert('aa')
+    }
+    const storePage2Info = (obj) => {
+        setpage2Obj(obj)
     }
 
     return (
@@ -312,11 +236,12 @@ export default function ContainerV2({ }) {
                     {/* <div style={{ height: '30px' }}></div> */}
                     <MainInfo changePage={changePage} background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
                         minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
-                    <div className="aa"></div>
+                    <div className="MiddleRow"></div>
                     <Row24Header boxColor={boxColor} showHeader={showHeader} />
                     <Row24Hr data1Hr={data1Hr} boxColor={boxColor} />
-                    <Data10Days data10Days={data10Days} boxColor={boxColor} day10BoxTop={day10BoxTop} day10BoxHeight={day10BoxHeight} />
-                </div> : <SettingPage changePage={changePage} background={background} weatherData={weatherData} anime={anime} />
+                    <Data10Days data10Days={data10Days} boxColor={boxColor} />
+                </div> : <SettingPage changePage={changePage} background={background}
+                    storePage2Info={storePage2Info} weatherData={weatherData} anime={anime} />
             }
         </>
     )

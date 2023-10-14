@@ -17,11 +17,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    /* background-position: 1000px 1440px; */
-    /* animation: backgroundAnimation 5s linear infinite alternate; */
-
-    /* 延迟动画开始时间以匹配动画周期 */
-
 }
 
 .ContainerV2Anime {
@@ -33,9 +28,5 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    /* background-position: 1000px 1440px; */
-    animation: backgroundAnimation 250s linear infinite alternate;
-
-    /* 延迟动画开始时间以匹配动画周期 */
-
+    animation: backgroundAnimation 150s linear infinite alternate;
 }
