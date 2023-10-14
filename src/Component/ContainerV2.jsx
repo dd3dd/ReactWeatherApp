@@ -79,36 +79,36 @@ export default function ContainerV2({ }) {
                         setanime(1);
                         setWeatherData(weatherObj)
                         if (weatherObj.weather.includes('晴') && hours >= 6 && hours < 18) {
-                            setBackground(`url('../sunny.jpg')`)
+                            setBackground(`url('../assets/sunny.jpg')`)
                             setBoxColor('#3077BF')
                         }
                         else if (weatherObj.weather.includes('晴') && hours >= 18 || (weatherObj.weather.includes('晴') && hours < 6)) {
-                            setBackground(`url('../nightsunny.jpg')`)
+                            setBackground(`url('../assets/nightsunny.jpg')`)
                             setBoxColor('#2B2E4D')
 
                         }
                         else if (weatherObj.weather.includes('多雲') && hours >= 6 && hours < 18) {
-                            setBackground(`url('../cloudy.jpg')`)
+                            setBackground(`url('../assets/cloudy.jpg')`)
                             setBoxColor('#4F5F75')
 
                         }
                         else if ((weatherObj.weather.includes('多雲') && hours >= 18) || (weatherObj.weather.includes('多雲') && hours < 6) ||
                             (weatherObj.weather.includes('陰'))) {
-                            setBackground(`url('../cloudynight.jpg')`)
+                            setBackground(`url('../assets/cloudynight.jpg')`)
                             setBoxColor('#4F5F75')
 
                         }
                         else if (weatherObj.weather.includes('雨')) {
-                            setBackground(`url('../rain2.gif')`)
+                            setBackground(`url('../assets/rain2.gif')`)
                             setBoxColor('#4F5F75')
                             setanime(0)
                         }
                         else if (hours >= 6 && hours < 18) {
-                            setBackground(`url('../cloudy.jpg')`)
+                            setBackground(`url('../assets/cloudy.jpg')`)
                             setBoxColor('#4F5F75')
                         }
                         else {
-                            setBackground(`url('../cloudynight.jpg')`)
+                            setBackground(`url('../assets/cloudynight.jpg')`)
                             setBoxColor('#4F5F75')
                         }
 
