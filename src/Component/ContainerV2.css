@@ -30,3 +30,9 @@
     position: relative;
     animation: backgroundAnimation 150s linear infinite alternate;
 }
+
+.test {
+    width: 100px;
+    min-height: 100px;
+    background-image: url('../assets/sunny.jpg')
+}

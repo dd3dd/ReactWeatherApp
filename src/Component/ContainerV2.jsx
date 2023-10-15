@@ -5,6 +5,11 @@ import Row24Hr from "./Row24Hr";
 import Data10Days from "./Data10Days";
 import Row24Header from "./Row24Header";
 import SettingPage from "./SettingPage";
+import sunny from '../assets/sunny.jpg'
+import nightsunny from '../assets/nightsunny.jpg'
+import cloudy from '../assets/cloudy.jpg'
+import cloudynight from '../assets/cloudynight.jpg'
+import rain from '../assets/rain2.gif'
 import './ContainerV2.css'
 
 export default function ContainerV2({ }) {
@@ -79,36 +84,36 @@ export default function ContainerV2({ }) {
                         setanime(1);
                         setWeatherData(weatherObj)
                         if (weatherObj.weather.includes('晴') && hours >= 6 && hours < 18) {
-                            setBackground(`url('../../sunny.jpg')`)
+                            setBackground(sunny)
                             setBoxColor('#3077BF')
                         }
                         else if (weatherObj.weather.includes('晴') && hours >= 18 || (weatherObj.weather.includes('晴') && hours < 6)) {
-                            setBackground(`url('../../nightsunny.jpg')`)
+                            setBackground(nightsunny)
                             setBoxColor('#2B2E4D')
 
                         }
                         else if (weatherObj.weather.includes('多雲') && hours >= 6 && hours < 18) {
-                            setBackground(`url('../../cloudy.jpg')`)
+                            setBackground(cloudy)
                             setBoxColor('#4F5F75')
 
                         }
                         else if ((weatherObj.weather.includes('多雲') && hours >= 18) || (weatherObj.weather.includes('多雲') && hours < 6) ||
                             (weatherObj.weather.includes('陰'))) {
-                            setBackground(`url('../../cloudynight.jpg')`)
+                            setBackground(cloudynight)
                             setBoxColor('#4F5F75')
 
                         }
                         else if (weatherObj.weather.includes('雨')) {
-                            setBackground(`url('../../rain2.gif')`)
+                            setBackground(rain)
                             setBoxColor('#4F5F75')
                             setanime(0)
                         }
                         else if (hours >= 6 && hours < 18) {
-                            setBackground(`url('../../cloudy.jpg')`)
+                            setBackground(cloudy)
                             setBoxColor('#4F5F75')
                         }
                         else {
-                            setBackground(`url('../../cloudynight.jpg')`)
+                            setBackground(cloudynight)
                             setBoxColor('#4F5F75')
                         }
 
@@ -232,8 +237,8 @@ export default function ContainerV2({ }) {
     return (
         <>
             {currentPage === 0 ?
-                <div style={{ backgroundImage: background }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
-                    {/* <div style={{ height: '30px' }}></div> */}
+                <div style={{ backgroundImage: `url(${background})` }} onScroll={handleScroll} className={`ContainerV2${anime === 1 ? 'Anime' : ''}`}>
+                    {/* <div className="test"></div> */}
                     <MainInfo changePage={changePage} background={background} mainInfoStyle={mainInfoStyle} weatherData={weatherData}
                         minMaxOpacity={minMaxOpacity} weatherOpacity={weatherOpacity} tempOpacity={tempOpacity} anime={anime} />
                     <div className="MiddleRow"></div>

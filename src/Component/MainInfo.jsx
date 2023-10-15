@@ -6,7 +6,7 @@ export default function MainInfo({ changePage, weatherData, minMaxOpacity = 1, w
     }
 
     return (
-        <div className={`MainInfo${anime === 1 ? 'Anime' : ''}`} style={{ backgroundImage: background }}>
+        <div className={`MainInfo${anime === 1 ? 'Anime' : ''}`} style={{ backgroundImage: `url(${background})` }}>
             <p onClick={() => changePage(1)} className='UserPos'>{weatherData.userPos}</p>
             <p onClick={() => changePage(1)} style={{ opacity: tempOpacity }} className='Temp'>{weatherData.temp}</p>
             <p style={{ opacity: weatherOpacity }} className='Weather'>{weatherData.weather}</p>
