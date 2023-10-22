@@ -4,6 +4,8 @@
 
 模仿iphone的天氣App介面，提供現在位置的天氣、24小時內每小時天氣預報以及10天天氣預報。
 
+## --因WeatherAPI trial plan到期，免費版本只提供未來3天預測--
+
 初始畫面:
 
 <img width="286" alt="image" src="https://github.com/dd3dd/ReactWeatherApp/assets/85333339/c041a376-54c7-4202-a5af-96e63e7178d6">
